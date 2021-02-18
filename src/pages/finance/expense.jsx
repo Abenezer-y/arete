@@ -1,11 +1,8 @@
 import React from 'react';
-import { Layout } from 'antd';
-import { Tabs } from 'antd';
-import { Steps, Divider } from 'antd';
-import { Form, Input, Button, Select, DatePicker, Card, Row, Col } from 'antd';
+import { Form, Layout, Button, Tabs, Card } from 'antd';
 import Expense from './expense/expense_registration';
 
-const { Step } = Steps;
+
 const { TabPane } = Tabs;
 const formRef = React.createRef();
 const formItemLayout = { labelCol: { span: 5 }, labelAlign: "right", wrapperCol: { span: 30, }, };
@@ -22,7 +19,6 @@ const RgistrationForm = () => (
     <br></br>
     <Form.Item>
       <Button type="primary" htmlType="submit"> Submit </Button>
-      {/* <Button htmlType="button" onClick={this.onReset}> Reset </Button> */}
     </Form.Item>
   </Form>
   );

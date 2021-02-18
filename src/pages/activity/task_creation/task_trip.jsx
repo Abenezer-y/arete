@@ -1,7 +1,7 @@
 // task_trip
 // TaskTrip
 
-import { Form, Input, Button, Space, Col, Row, InputNumber, Card} from 'antd';
+import { Form, Input, Button, Col, Row, InputNumber, Card} from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import './new-task.css';
 

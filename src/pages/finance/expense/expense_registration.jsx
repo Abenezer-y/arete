@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Row, Col, Form, Input, InputNumber, Modal, Button, Space, Typography, Divider, DatePicker, Upload} from 'antd';
-import { UploadOutlined, UserOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Form, Input, InputNumber, Modal, Button, Typography, DatePicker, Upload} from 'antd';
+import { UploadOutlined} from '@ant-design/icons';
 import { Select } from 'antd';
 import EditableTable from '../../components/editable_table';
 
@@ -48,7 +48,7 @@ const Expense = () => {
 
   const showUserModal = () => {setVisible(true);};
   const hideUserModal = () => {setVisible(false);};
-  const onFinish = (values) => {console.log('Finish:', values);};
+  // const onFinish = (values) => {console.log('Finish:', values);};
   
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, Card } from 'antd';
+import { Layout, Menu } from 'antd';
 import { DashboardOutlined, PieChartOutlined, } from '@ant-design/icons';
 
 import {BrowserRouter as Router, Switch, Route } from "react-router-dom";

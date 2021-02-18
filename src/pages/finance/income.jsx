@@ -18,11 +18,11 @@ const columns = [
 
 export default function IncomeLayout() {
   const [table_values, setTable] = useState([{key: 1, id:"", description:"", amount:"", date:""}])
-  const successCallback = (data) => {
-    console.log(data);
-    console.log(table_values);
-    console.log("Reached This Stage")     
-   }
+  // const successCallback = (data) => {
+  //   console.log(data);
+  //   console.log(table_values);
+  //   console.log("Reached This Stage")     
+  //  }
 
   const failureCallback = (error) => {
     console.error("Error generating audio file: " + error);}

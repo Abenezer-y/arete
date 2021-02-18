@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Table, Input, Button, Popconfirm, Form, Card, Typography, Col, Row } from 'antd';
-const { Text, Title } = Typography;
+const {Title } = Typography;
 const EditableContext = React.createContext(null);
 
 const EditableRow = ({ index, ...props }) => {
