@@ -3,7 +3,7 @@
 
 import { Form, Input, Button, Space, Col, Row, InputNumber, Card} from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-
+import './new-task.css';
 
 
 const TaskTrip = () => {
@@ -15,34 +15,40 @@ const TaskTrip = () => {
         {(fields, { add, remove }) => (
           <>
             {fields.map(field => (
-              <Space key={field.key} >
+            <Row  key={field.key} gutter={[16, 16]}>
+            <Col flex="auto">
                   
-                <Form.Item {...field} label={[" Loaction ", field.key]} name={[field.name, 'location']} 
+                <Form.Item  flex="auto" {...field} label={[" Loaction ", field.key]} name={[field.name, 'location']} 
                             fieldKey={[field.fieldKey, 'location']}  
                             rules={[{ required: true, message: 'Missing Loaction' }]}>
-                    <Input style={{ width: 400 }} />
-                 
-                </Form.Item>
+                    <Input/>
 
+                </Form.Item>
+                </Col>
+                    <Col flex="none">
                 <Form.Item {...field} label="Est. Cost" name={[field.name, 'cost']} fieldKey={[field.fieldKey, 'cost']}
                             rules={[{ required: true, message: 'Missing Cost' }]}>
                         <InputNumber defaultValue={0}  formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                      parser={value => value.replace(/\$\s?|(,*)/g, '')}  style={{ width: 120 }}/>
                 </Form.Item>
-
+                </Col>
+                    <Col flex="none">
                 <Form.Item {...field} label="Hrs." name={[field.name, 'hrs']} fieldKey={[field.fieldKey, 'hrs']}>
-                        <InputNumber defaultValue={0} style={{ width: 60 }} min={0}/>
+                        <InputNumber defaultValue={0} min={0}/>
                 </Form.Item>
+                </Col>
+                    <Col flex="none">
                 <Form.Item {...field} label="Mins." name={[field.name, 'mins']} fieldKey={[field.fieldKey, 'mins']}
                             rules={[{ required: true, message: 'Missing Time' }]}>
-                        <InputNumber defaultValue={0} style={{ width: 60 }} min={0} max={59}/>
+                        <InputNumber defaultValue={0} min={0} max={59}/>
                 </Form.Item>
-
+                </Col>
+                    <Col flex="none">
                 <Form.Item>
                 <MinusCircleOutlined onClick={() => remove(field.name)} />
                 </Form.Item>
-
-              </Space>
+                </Col>
+                </Row>
             ))}
 
             <Row gutter={[14, 14]}>

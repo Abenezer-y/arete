@@ -1,0 +1,10 @@
+.requirement {
+                display: block;
+                flex-direction: column; 
+
+            }
+
+
+Select {
+    width: 50%;
+}

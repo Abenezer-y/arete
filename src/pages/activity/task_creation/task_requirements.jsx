@@ -2,9 +2,9 @@
 // TaskRequirements
 
 import React from 'react';
-import { Form, Input, Button, Space, Col, Row, Upload, Card} from 'antd';
+import { Form, Input, Button, Col, Row, Upload, Card} from 'antd';
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-
+import './new-task.css';
 
 class UploadComponent extends React.Component {
   state = {
@@ -17,20 +17,6 @@ class UploadComponent extends React.Component {
     fileList.forEach(file => {formData.append('files[]', file);});
 
     this.setState({ uploading: true, });
-
-    // request('http://localhost:4000/picture', { method: 'post', data: formData });
-    // You can use any AJAX library you like
-    // reqwest({
-
-    //   url: 'http://localhost:4000/picture',
-    //   method: 'post',
-    //   processData: false,
-    //   data: formData,
-
-    //   success: () => {this.setState({fileList: [], uploading: false,});
-    //                   message.success('upload successfully.');},
-    //   error: () => {this.setState({uploading: false,});
-    //                 message.error('upload failed.');}, }); 
   };
 
   render() {
@@ -69,19 +55,6 @@ class UploadComponent extends React.Component {
 
 export default function TaskRequirements(props){
 
-  // const onUpload = async () => {
-  //   console.log(values);
-  //   console.log(values['requirements']['upload'][0]);
-  //    const formData = new FormData()
-  //    formData.append("files", values['requirements']['upload'][0])
-     
-  //    const res = await fetch("http://localhost:4000/picture", {
-  //      method: "POST",
-  //      body: formData
-  //    }).then(res => res.json())
-  //    alert(JSON.stringify(res))
-  //  }
-
   return (
     <>
       <Card title="Requirements to complet task">
@@ -89,32 +62,36 @@ export default function TaskRequirements(props){
         {(fields, { add, remove }) => (
           <>
             {fields.map(field => (
-              <Space key={field.key} >
-                  
-                <Form.Item {...field} label={[field.key," Reqirements Description"]} name={[field.name, 'requirement']} 
-                            fieldKey={[field.fieldKey, 'requirement']}  
-                            rules={[{ required: true, message: 'Missing Item Break Down' }]}>
-                    <Input style={{ width: 600 }} />
-                 
-                </Form.Item>
+              <Row  key={field.key} gutter={[16, 16]}>
+                <Col flex="auto">
+                <Form.Item  {...field} label={[field.key," Reqirements"]} name={[field.name, 'requirement']} 
+                          fieldKey={[field.fieldKey, 'requirement']}  
+                          rules={[{ required: true, message: 'Missing Item Break Down' }]}>
+                  <Input />
+              </Form.Item>
+                </Col>
+                <Col flex="none">
                 <Form.Item>
-                <MinusCircleOutlined onClick={() => remove(field.name)} />
-                </Form.Item>
-                
+              <UploadComponent />
+              </Form.Item>
+                </Col>
+                <Col flex="none">
                 <Form.Item>
-                <UploadComponent />
-                </Form.Item>
-                
+              <MinusCircleOutlined onClick={() => remove(field.name)} />
+              </Form.Item>
+                </Col>
+              </Row>
 
-              </Space>
             ))}
-            <Row gutter={[16, 16]}>
-                <Col span={12}> 
-                    <Button onClick={() => add()}  icon={<PlusOutlined />}>
+           
+                
+                <Form.Item>
+                <Button onClick={() => add()}  icon={<PlusOutlined />}>
                         Add Requirements
                     </Button>
-                </Col>
-            </Row>
+                </Form.Item>
+            
+
           </>
         )}
       </Form.List>
