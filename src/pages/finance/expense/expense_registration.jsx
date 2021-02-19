@@ -57,9 +57,7 @@ const Expense = () => {
     <Card  title="Expense Registration Form">
     <Form form={main_form} layout="horizontal" name="userForm" labelAlign="right"  {...formItemLayout}>
       
-    <Form.Item name="description" label= {<Text strong= "true">Reason for transaction</Text>}  rules={[ { required: true, }, ]} >
-        <Input />
-      </Form.Item>
+
 
             <Form.Item name="type"  label={<span>Transaction type</span>} rules={[ { required: true, }, ]} >
         <Select defaultValue="purchase" style={{ width: 200 }} >
@@ -97,7 +95,9 @@ const Expense = () => {
         </Select>
         </Form.Item>
       
-
+        <Form.Item name="description" label= {<Text strong= "true">Reason for transaction</Text>}  rules={[ { required: true, }, ]} >
+        <Input />
+      </Form.Item>
 
 
     

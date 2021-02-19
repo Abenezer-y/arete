@@ -1,4 +1,4 @@
-import React , {useState, useRef} from 'react';
+import React , {useState, useRef, useEffect} from 'react';
 import { Table, Tabs, Card, Row, Col, Layout, Form, Input, InputNumber, DatePicker, Button } from 'antd';
 import request from 'umi-request';
 // import {columns, data} from './income/income_summary';
@@ -16,22 +16,34 @@ const columns = [
 ];
 
 
-export default function IncomeLayout() {
-  const [table_values, setTable] = useState([{key: 1, id:"", description:"", amount:"", date:""}])
-  // const successCallback = (data) => {
-  //   console.log(data);
-  //   console.log(table_values);
-  //   console.log("Reached This Stage")     
-  //  }
 
+export default function IncomeLayout() {
+  const [table_values, setTable] = useState([])
+
+  // const successCallback = (data) =>{
+  //   console.log(data);
+  //   console.log(data.data);
+  //   setTable(data.data)
+  //   console.log(table_values);
+  // }
   const failureCallback = (error) => {
-    console.error("Error generating audio file: " + error);}
+      console.error("Error: " + error);}
 
   const formRef = useRef('');
 
   const onReset = () => {formRef.current.resetFields();};
-  
+
+  useEffect( ()=>{     
+  try {
+    request.get('https://arete-server.herokuapp.com/api/incomes', { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback);
+  } catch (error) {
+    failureCallback({ error });
+  }
+  }, [])
+    
   const onFinish = (values) => { 
+
+
     const dateValue = values['date'];
     const value = { ...values, 'date': dateValue.format('YYYY-MM-DD')};                           
 
@@ -40,7 +52,7 @@ export default function IncomeLayout() {
             {console.log(response);}).catch(function(error) 
             {console.log(error);});
     
-    request.get('https://arete-server.herokuapp.com/api/incomes', { getResponse: true }).then((data) => setTable(data.data)).catch(failureCallback);
+    
     onReset()
   };
       
@@ -81,7 +93,7 @@ export default function IncomeLayout() {
             Income registration layout
           </TabPane>
           <TabPane tab="Income Summary" key="3">
-            <Table columns={columns}  dataSource={table_values} bordered title={() => 'Header'} footer={() => 'Footer'} />
+            <Table columns={columns} dataSource={table_values} bordered title={() => 'Header'} footer={() => 'Footer'} />
           </TabPane>
         </Tabs>
       </Content>

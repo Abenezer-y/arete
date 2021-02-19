@@ -12,11 +12,6 @@ import './task_creation/new-task.css';
 const { RangePicker } = DatePicker;
 // const { Option } = Select;
 
-let report_to = [{ label: 'Abenezer', value: 'Abenezer' }, 
-                { label: 'Chan', value: 'Chan' },
-                { label: 'Shuga', value: 'Shuga' },
-                { label: 'William', value: 'William' },
-                { label: 'Mikias', value: 'Mikias' }]
 
 let tag = [{ label: 'Urgent', value: 'urgent' }, 
            { label: 'Recurring', value: 'recurring' },
@@ -57,10 +52,6 @@ class NewTask extends React.Component {
       <Form {...formItemLayout} ref={this.formRef} name="avtivity_form" onFinish={this.onFinish}>
         <br></br>
         <Card title=" Task Detail">
-        <Form.Item name="report_to" label="Report to">
-            <Select showSearch   placeholder="Report back to" optionFilterProp="children" onChange={this.onChange} options={report_to}>
-            </Select>
-        </Form.Item>
         <Form.Item name="tag_selection" label="Tag"  rules={[ { required: true, message: 'Please select task tag!', type: 'array', }, ]} >
             <Select className = 'tag' mode="multiple" placeholder="Please select task tag" options={tag} style={{ maxWidth: 300}}>
 

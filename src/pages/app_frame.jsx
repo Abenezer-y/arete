@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 // import DashBoard from './dashboard/dashboard';
 
-import NewTask from './activity/new_task';
+import TaskSummary from './activity/task_summary';
 import ExpenseLayout from './finance/expense';
 import IncomeLayout from './finance/income';
 
@@ -19,8 +19,8 @@ const { SubMenu } = Menu;
 
 class AppFrame extends React.Component {
   state = {
-    collapsed: false,
-  };
+    collapsed: false,};
+
 
   onCollapse = collapsed => {
     console.log(collapsed);
@@ -42,12 +42,8 @@ class AppFrame extends React.Component {
                 <Menu.Item key="analysis">  Analysis
                 <Link to="/analysis"></Link> </Menu.Item>
             </SubMenu>
-            <SubMenu key="activity" icon={<PieChartOutlined />} title="Activity Manager">
-              <Menu.Item key="new_task"> Create Task
-               <Link to="/new_task"></Link> </Menu.Item>
-              <Menu.Item key="update_task">  Update Progress
-                <Link to="/update_task"></Link> </Menu.Item>
-            </SubMenu>
+            <Menu.Item key="tasks" icon={<DashboardOutlined />}> Activity Manager
+               <Link to="/tasks"></Link> </Menu.Item>
             <SubMenu key="finance" icon={<PieChartOutlined />} title="Financial Manager">
               <Menu.Item key="income"> Income
                <Link to="/income"></Link> </Menu.Item>
@@ -62,11 +58,10 @@ class AppFrame extends React.Component {
           <Content style={{ margin: '0 16px' }}>
             
             <Switch>
-                <Route exact path="/" component={NewTask}></Route>
-                <Route exact path="/summary" component={NewTask}></Route>
-                <Route exact path="/analysis" component={NewTask}></Route>
-                <Route exact path="/new_task" component={NewTask}></Route>
-                <Route exact path="/update_task" component={NewTask}></Route>
+                <Route exact path="/"></Route>
+                <Route exact path="/summary"></Route>
+                <Route exact path="/analysis"></Route>
+                <Route exact path="/tasks" component={TaskSummary}></Route>
                 <Route exact path="/income" component={IncomeLayout}></Route>
                 <Route exact path="/expense" component={ExpenseLayout}></Route>
             </Switch>
