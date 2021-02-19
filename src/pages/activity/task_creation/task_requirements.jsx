@@ -47,14 +47,7 @@ class UploadComponent extends React.Component {
 }
 
 
-
-
-
-
-
-
 export default function TaskRequirements(props){
-
   return (
     <>
       <Card title="Requirements to complet task">
@@ -65,8 +58,8 @@ export default function TaskRequirements(props){
               <Row  key={field.key} gutter={[16, 16]}>
                 <Col flex="auto">
                 <Form.Item  {...field} label={[field.key," Reqirements"]} name={[field.name, 'requirement']} 
-                          fieldKey={[field.fieldKey, 'requirement']}  
-                          rules={[{ required: true, message: 'Missing Item Break Down' }]}>
+                            fieldKey={[field.fieldKey, 'requirement']}  
+                            rules={[{ required: true, message: 'Missing Item Break Down' }]}>
                   <Input />
               </Form.Item>
                 </Col>
@@ -81,19 +74,13 @@ export default function TaskRequirements(props){
               </Form.Item>
                 </Col>
               </Row>
-
-            ))}
-           
-                
+            ))}    
                 <Form.Item>
                 <Button onClick={() => add()}  icon={<PlusOutlined />}>
                         Add Requirements
                     </Button>
                 </Form.Item>
-            
-
-          </>
-        )}
+          </> )}
       </Form.List>
       </Card>
       </>

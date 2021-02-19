@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useState, useRef} from 'react';
 import { Table, Tabs, Card, Row, Col, Layout, Form, Input, InputNumber, DatePicker, Button } from 'antd';
 import request from 'umi-request';
 // import {columns, data} from './income/income_summary';
@@ -9,7 +9,7 @@ const {Content, Header } = Layout;
 const modalFormlayout = { labelCol: { span: 4 }, wrapperCol: { span: 24 },};
 
 const columns = [
-  {title: 'Ref', dataIndex: 'id', align: 'center', render: text => <a>{text}</a>, },
+  {title: 'Ref', dataIndex: 'id', align: 'center', render: text => <div>{text}</div>, },
   {title: 'Date', dataIndex: 'date', align: 'center' },
   {title: 'Description', dataIndex: 'description',},
   {title: 'Amount', className: 'column-money', dataIndex: 'amount', align: 'right',},
@@ -27,7 +27,7 @@ export default function IncomeLayout() {
   const failureCallback = (error) => {
     console.error("Error generating audio file: " + error);}
 
-  const formRef = React.createRef();
+  const formRef = useRef('');
 
   const onReset = () => {formRef.current.resetFields();};
   
@@ -51,7 +51,7 @@ export default function IncomeLayout() {
         <Tabs defaultActiveKey="1">
           <TabPane tab="Personal Income"  key="1">
               <Card>
-              <Form  ref={formRef} name="income_form" onFinish={onFinish} labelAlign="right" {...modalFormlayout}>
+              <Form  ref = {formRef} name="income_form" onFinish={onFinish} labelAlign="right" {...modalFormlayout}>
               <br></br> 
               <Form.Item name="date" label="Date" rules={[ { required: true, }, ]} >
                   <DatePicker />

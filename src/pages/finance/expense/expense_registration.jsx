@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Card, Row, Col, Form, Input, InputNumber, Modal, Button, Typography, DatePicker, Upload} from 'antd';
 import { UploadOutlined} from '@ant-design/icons';
 import { Select } from 'antd';
@@ -14,15 +14,15 @@ function onFocus() {console.log('focus');}
 function onSearch(val) {console.log('search:', val);}
 
 // reset form fields when modal is form, closed
-const useResetFormOnCloseModal = ({ form, visible }) => {
-  const prevVisibleRef = useRef();
-  useEffect(() => { prevVisibleRef.current = visible; }, [visible]);
-  const prevVisible = prevVisibleRef.current;
-  useEffect(() => { if (!visible && prevVisible) { form.resetFields(); } }, [visible]); };
+// const useResetFormOnCloseModal = ({ form, visible }) => {
+//   const prevVisibleRef = useRef();
+//   useEffect(() => { prevVisibleRef.current = visible; }, [visible]);
+//   const prevVisible = prevVisibleRef.current;
+//   useEffect(() => { if (!visible && prevVisible) { form.resetFields(); } }, [visible]); };
 
 const ModalForm = ({ visible, onCancel }) => {
   const [form] = Form.useForm();
-  useResetFormOnCloseModal({ form, visible, });
+  // useResetFormOnCloseModal({ form, visible, });
   const onOk = () => { form.submit(); };
 
   return (
@@ -44,7 +44,7 @@ const ModalForm = ({ visible, onCancel }) => {
 
 const Expense = () => {
   const [visible, setVisible] = useState(false);
-  const [form] = Form.useForm();
+  const [main_form] = Form.useForm();
 
   const showUserModal = () => {setVisible(true);};
   const hideUserModal = () => {setVisible(false);};
@@ -55,7 +55,7 @@ const Expense = () => {
     <>
     <br />
     <Card  title="Expense Registration Form">
-    <Form form={form} layout="horizontal" name="userForm" labelAlign="right"  {...formItemLayout}>
+    <Form form={main_form} layout="horizontal" name="userForm" labelAlign="right"  {...formItemLayout}>
       
     <Form.Item name="description" label= {<Text strong= "true">Reason for transaction</Text>}  rules={[ { required: true, }, ]} >
         <Input />

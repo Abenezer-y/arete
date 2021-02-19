@@ -16,7 +16,7 @@ const EditableRow = ({ index, ...props }) => {
 
 const EditableCell = ({title, editable, children, dataIndex, record, handleSave, ...restProps}) => {
   const [editing, setEditing] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef('');
   const form = useContext(EditableContext);
   useEffect(() => { if (editing) { inputRef.current.focus(); } }, [editing]);
 
@@ -93,7 +93,7 @@ class EditableTable extends React.Component {
         render: (_, record) =>
           this.state.dataSource.length >= 1 ? (
             <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-              <a>Delete</a>
+              Delete
             </Popconfirm>
           ) : null,
       },

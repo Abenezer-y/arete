@@ -4,12 +4,12 @@ import Expense from './expense/expense_registration';
 
 
 const { TabPane } = Tabs;
-const formRef = React.createRef();
+// const formRef = React.createRef();
 const formItemLayout = { labelCol: { span: 5 }, labelAlign: "right", wrapperCol: { span: 30, }, };
 
 const RgistrationForm = () => (
     
-    <Form {...formItemLayout} ref={formRef} name="avtivity_form" >
+    <Form {...formItemLayout} name="avtivity_form" >
     <br></br>
     <Card title=" Task Detail">
 
