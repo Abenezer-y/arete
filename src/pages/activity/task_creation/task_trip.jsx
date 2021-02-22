@@ -31,18 +31,18 @@ const TaskTrip = () => {
                 <Form.Item {...field} label="Est. Cost" name={[field.name, 'cost']} fieldKey={[field.fieldKey, 'cost']}
                             rules={[{ required: true, message: 'Missing Cost' }]}>
                 <InputNumber  formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                              parser={value => value.replace(/\$\s?|(,*)/g, '')}  style={{ width: 100 }}/>
+                              parser={value => value.replace(/\$\s?|(,*)/g, '')}  style={{ width: 120 }}/>
                 </Form.Item>
                 </Col>
                     <Col flex="none">
                 <Form.Item {...field} label="Hrs." name={[field.name, 'hrs']} fieldKey={[field.fieldKey, 'hrs']}>
-                        <InputNumber  min={0}/>
+                        <InputNumber style={{ width: 50 }} min={0}/>
                 </Form.Item>
                 </Col>
                 <Col flex="none">
                 <Form.Item {...field} label="Mins." name={[field.name, 'mins']} fieldKey={[field.fieldKey, 'mins']}
                             rules={[{ required: true, message: 'Missing Time' }]}>
-                  <InputNumber  min={0} max={59}/>
+                  <InputNumber style={{ width: 50 }} min={0} max={59}/>
                 </Form.Item>
                 </Col>
                 <Col flex="none">
@@ -54,9 +54,9 @@ const TaskTrip = () => {
             ))}
 
             <Row gutter={[14, 14]}>
-                <Col flex = '200px'> 
+                <Col span={12}> 
                 <Form.Item>
-                    <Button style={{ width: '100 %' }} onClick={() => add()}  icon={<PlusOutlined />}>
+                    <Button style={{ width: 200 }} onClick={() => add()}  icon={<PlusOutlined />}>
                         Add Travel Information
                     </Button>
                 </Form.Item>

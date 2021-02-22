@@ -56,7 +56,7 @@ class NewTask extends React.Component {
           <Col flex='auto'>
 
         <Form.Item name="tag_selection"  rules={[ { required: true, message: 'Please select task tag!', type: 'array', }, ]} >
-            <Select className = 'tag' mode="multiple" placeholder="Please select task tag" options={tag} style={{ maxWidth: 300}}>
+            <Select className = 'tag' mode="multiple" placeholder="Please select task tag" options={tag} style={{ maxWidth: 292}} >
 
             </Select>
 
@@ -76,7 +76,7 @@ class NewTask extends React.Component {
             </Form.Item>
    
             </Col>
-          <Col flex='auto'></Col>
+          <Col flex='50px'></Col>
           </Row>
            <br />
           <Form.Item >
@@ -106,7 +106,8 @@ class NewTask extends React.Component {
               <Button type="primary" htmlType="submit"> Submit </Button>
             </Form.Item>
           </Col>
-          <Col flex="50px"></Col>
+          <Col flex="auto"></Col>
+          
         </Row>
         </Form.Item>
         </Card>
