@@ -1,7 +1,7 @@
 // task_form
 // TaskForm
 
-import { Form, Input, Button, Select, DatePicker, Card, Row, Col, Typography } from 'antd';
+import { Form, Input, Button, Select, DatePicker, Card, Row, Col,  } from 'antd';
 import React from 'react';
 import TaskBreakdown from './task_creation/task_breakdown';
 import TaskTrip from './task_creation/task_trip';
@@ -10,13 +10,13 @@ import request from 'umi-request';
 import './task_creation/new-task.css';
 
 const { RangePicker } = DatePicker;
-const { Text } = Typography;
+
 
 let tag = [{ label: 'Urgent', value: 'urgent' }, 
            { label: 'Recurring', value: 'recurring' },
            { label: 'No Tag', value: 'no tag' },]
 
-const formItemLayout = { labelCol: { span: 6 }, labelAlign: "right", wrapperCol: { span: 24, }, };
+const formItemLayout = { labelCol: { span: 6 }, labelAlign: "right",  };
 
 
 class NewTask extends React.Component {
@@ -51,26 +51,33 @@ class NewTask extends React.Component {
       <Form {...formItemLayout} ref={this.formRef} name="avtivity_form" onFinish={this.onFinish}>
         <br></br>
         <Card title=" Task Detail">
-        <Form.Item name="tag_selection" label="Tag"  rules={[ { required: true, message: 'Please select task tag!', type: 'array', }, ]} >
+        <Row align="middle" justify="center" >
+          <Col flex="25px"></Col>
+          <Col flex='auto'>
+
+        <Form.Item name="tag_selection"  rules={[ { required: true, message: 'Please select task tag!', type: 'array', }, ]} >
             <Select className = 'tag' mode="multiple" placeholder="Please select task tag" options={tag} style={{ maxWidth: 300}}>
 
             </Select>
 
         </Form.Item>
 
-        <Form.Item name="task_duration" label={<Text ellipsis= {true} >Assignment and Delivery date</Text>} {...this.rangeConfig}>
+        <Form.Item name="task_duration" {...this.rangeConfig}>
             <RangePicker />
           </Form.Item>
-            <Form.Item name="task_title" label="Title" rules={[ { required: true, }, ]} >
-                    <Input />
+            <Form.Item name="task_title" rules={[ { required: true, }, ]} >
+                  <Input placeholder="Activity Title"/>
             </Form.Item>
-            <Form.Item name="initial_information" label="Description">
-                  <Input.TextArea />
+            <Form.Item name="initial_information">
+                  <Input.TextArea placeholder="Activity Description"/>
             </Form.Item>
-            <Form.Item name="objective" label="Objective">
-                  <Input.TextArea />
+            <Form.Item name="objective">
+                  <Input.TextArea placeholder="Activity Objective"/>
             </Form.Item>
    
+            </Col>
+          <Col flex='auto'></Col>
+          </Row>
            <br />
           <Form.Item >
             <TaskRequirements />
@@ -99,7 +106,7 @@ class NewTask extends React.Component {
               <Button type="primary" htmlType="submit"> Submit </Button>
             </Form.Item>
           </Col>
-          <Col flex='auto'></Col>
+          <Col flex="50px"></Col>
         </Row>
         </Form.Item>
         </Card>

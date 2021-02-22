@@ -9,16 +9,20 @@ export default function TaskRequirements() {
   return (
     <>
       <Card title="Procedures (Task breakdown)">
+      <Row align="middle" justify="center" >
+          <Col flex='none'></Col>
+          <Col flex='auto'>
+
       <Form.List name="breakdowns">
         {(fields, { add, remove }) => (
           <>
             {fields.map(field => (
               <Row  key={field.key} gutter={[16, 16]}>
               <Col flex="auto">
-                <Form.Item {...field} label={["Steps ", field.key]} name={[field.name, 'step']} 
+                <Form.Item {...field} name={[field.name, 'step']} 
                             fieldKey={[field.fieldKey, 'step']}  
                             rules={[{ required: true, message: 'Missing Item Break Down' }]}>
-                    <Input />
+                    <Input placeholder={"Add Procedure"}/>
                  
                 </Form.Item>
                 </Col>
@@ -50,7 +54,7 @@ export default function TaskRequirements() {
 
               
                 <Form.Item>
-                    <Button onClick={() => add()}  icon={<PlusOutlined />}>
+                    <Button style={{ width: '100 %' }} onClick={() => add()}  icon={<PlusOutlined />}>
                         Add Steps
                     </Button>
                 </Form.Item>
@@ -59,6 +63,10 @@ export default function TaskRequirements() {
           </>
         )}
       </Form.List>
+  
+      </Col>
+          <Col flex='none'></Col>
+      </Row>
       </Card>
     </>
   );

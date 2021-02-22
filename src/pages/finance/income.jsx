@@ -32,7 +32,7 @@ export default function IncomeLayout() {
 
   useEffect( ()=>{     
   try {
-    request.get('http://127.0.0.1:5000/api/incomes', { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback);
+    request.get('https://arete-server.herokuapp.com/api/incomes', { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback);
   } catch (error) {
     failureCallback({ error });
   }

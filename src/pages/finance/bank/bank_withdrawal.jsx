@@ -33,7 +33,6 @@ export default function Withdraw() {
         </Form.Item>
         <Form.Item name="ck_amount" label="Amount" rules={[ { required: true, }, ]} >
           <InputNumber
-              defaultValue={0}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={value => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: 150 }}/>

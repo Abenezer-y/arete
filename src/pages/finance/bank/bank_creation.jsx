@@ -32,7 +32,7 @@ export default function BankAdd() {
         </Form.Item>
         <Form.Item name="opn_blc" label="Opening Balance" rules={[ { required: true, }, ]} >
           <InputNumber
-             
+              placeholder="1000.00"
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={value => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: 150 }}/>
