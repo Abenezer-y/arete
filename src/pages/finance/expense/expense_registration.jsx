@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Card, Row, Col, Form, Input, InputNumber, Modal, Button, Typography, DatePicker, Upload} from 'antd';
 import { UploadOutlined} from '@ant-design/icons';
 import { Select } from 'antd';
-import EditableTable from '../../components/editable_table';
+import EditableTable from '../../../components/editable_table';
+import request from 'umi-request';
 
 const { Option } = Select;
 const { Text, Title } = Typography;
@@ -43,79 +44,82 @@ const ModalForm = ({ visible, onCancel }) => {
 };
 
 const Expense = () => {
+  const formRef = React.createRef();
   const [visible, setVisible] = useState(false);
   const [main_form] = Form.useForm();
 
   const showUserModal = () => {setVisible(true);};
   const hideUserModal = () => {setVisible(false);};
-  // const onFinish = (values) => {console.log('Finish:', values);};
+
+  const onReset = () => {formRef.current.resetFields();};
   
+  const onFinish = (values) => { 
+ 
+    const value = { ...values, 'date': values['date'].format('YYYY-MM-DD'),};
+                            
+    console.log(value)
+    request('https://arete-server.herokuapp.com/api/expense_save', {method: 'post', data: {value},})
+    .then(function(response) {console.log(response);})
+    .catch(function(error) {console.log(error);});
+                         
+    onReset()                      
+                          };
 
   return (
     <>
     <br />
     <Card  title="Expense Registration Form">
-    <Form form={main_form} layout="horizontal" name="userForm" labelAlign="right"  {...formItemLayout}>
+    <Form form={main_form} ref={formRef} layout="horizontal" name="userForm" labelAlign="right"  {...formItemLayout}
+          onFinish={onFinish}>
       
-
-
-            <Form.Item name="type"  label={<span>Transaction type</span>} rules={[ { required: true, }, ]} >
+        <Form.Item name="type"  label={<span>Transaction type</span>} rules={[ { required: true, }, ]} >
         <Select defaultValue="purchase" style={{ width: 200 }} >
           <Option value="service">Service</Option>
           <Option value="purchase">Purchase</Option>
         </Select>
         </Form.Item> 
            
-            
-            <Form.Item name="amount" label="Amount" rules={[ { required: true, }, ]} >
+        <Form.Item name="amount" label="Amount" rules={[ { required: true, }, ]} >
         <InputNumber
-            defaultValue={0}
             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             parser={value => value.replace(/\$\s?|(,*)/g, '')}
             onChange={onChange}
             style={{ width: 200 }}
           />
         </Form.Item>
-            
-         
-
-
-            <Form.Item name="acc"  label={<span>Expense Account</span>} rules={[ { required: true, }, ]} >
+                     
+        <Form.Item name="acc"  label={<span>Expense Account</span>} rules={[ { required: true, }, ]} >
           <Select style={{ width: 200 }} >
-          <Option value="service">Service</Option>
-          <Option value="purchase">Purchase</Option>
-        </Select>
-      </Form.Item>
-          
+            <Option value="service">Service</Option>
+            <Option value="purchase">Purchase</Option>
+          </Select>
+        </Form.Item>
            
-            <Form.Item name="payment" label="Payment Method" rules={[ { required: true, }, ]} >
-            <Select style={{ width: 200 }} >
-          <Option value="service">Cash</Option>
-          <Option value="purchase">Check</Option>
-        </Select>
+        <Form.Item name="payment" label="Payment Method" rules={[ { required: true, }, ]} >
+          <Select style={{ width: 200 }} >
+            <Option value="service">Cash</Option>
+            <Option value="purchase">Check</Option>
+          </Select>
         </Form.Item>
       
         <Form.Item name="description" label= {<Text strong= "true">Reason for transaction</Text>}  rules={[ { required: true, }, ]} >
-        <Input />
-      </Form.Item>
+          <Input />
+        </Form.Item>
 
-
-    
-    <br />
-    <Card title= {<Title level={4}>Receipt Details</Title>}>
-            <Row align="middle" >
-            <Col flex='auto'>
+      <br />
+      <Card title= {<Title level={4}>Receipt Details</Title>}>
+        <Row align="middle" >
+          <Col flex='auto'>
             <Form.Item name="date" label={<Text strong= "true">Date</Text>} rules={[ { required: true, }, ]} >
               <DatePicker />
             </Form.Item>
-            </Col>
-            <Col flex='auto'>
+          </Col>
+          <Col flex='auto'>
             <Form.Item name="receipt_number" label={<Text strong= "true">Receipt Number</Text>} rules={[ { required: true, }, ]} >
               <Input />
             </Form.Item>
-            </Col>
-            </Row>
-
+          </Col>
+        </Row>
       </Card>
       <br />
       <Card title= {<Title level={4}>
@@ -131,7 +135,6 @@ const Expense = () => {
                   <Option value="lucy">Lucy</Option>
                   <Option value="tom">Tom</Option>
             </Select>
-            
             </Col>
             <Col flex='none'>
             <Button htmlType="button" style={{ margin: '0 8px', }} onClick={showUserModal} >
@@ -143,12 +146,10 @@ const Expense = () => {
             </Title>}>
             <Row justify="center">
               <Col flex="150px">
-         
                   <Text strong= "true"> Name </Text>
                   </Col>
               <Col flex="auto">
                   <Text  type="secondary"> All Mart Supermarket </Text>
-           
               </Col>
             </Row>
             <Row justify="center">
@@ -158,7 +159,6 @@ const Expense = () => {
                   </Col>
               <Col flex="auto">
                   <Text  type="secondary"> 0045678792 </Text>
-                
               </Col>
             </Row>
             <Row justify="center">
@@ -167,41 +167,28 @@ const Expense = () => {
               </Col>
               <Col flex="auto">
               <Text  type="secondary"> 0911111213 </Text>
-              </Col>
-              
+              </Col>            
             </Row>
             <Row justify="center">
-              <Col flex="150px">
-                
+              <Col flex="150px">               
                   <Text strong= "true"> Address </Text>
                   </Col>
               <Col flex="auto">
-                  <Text  type="secondary"> Addis Ababa, Bole W.05 K.07 H.No 567</Text>
-               
+                  <Text  type="secondary"> Addis Ababa, Bole W.05 K.07 H.No 567</Text>             
               </Col>
-            </Row>
-
-
-            
+            </Row>  
       </Card>
       <br />
-
-      <EditableTable/>
-
-
+        <EditableTable/>
       <br />
       <Card title= {<Title level={4}>Upload Receipt</Title>}>
-        <Form.Item
-        name="upload"
-        label="Upload Receipts"
-        valuePropName="fileList"
-      >
+     
+
         <Upload name="logo" action="/upload.do" listType="picture">
           <Button icon={<UploadOutlined />}>Click to upload</Button>
         </Upload>
-      </Form.Item>
+      
       </Card>
-      </Form>
       <br />
       <Card title= {<Title level={4}>Amount Summary</Title>}>
       <Row align="middle" justify="space-around" gutter={[8, 14]}>
@@ -211,6 +198,22 @@ const Expense = () => {
             <Col><Text  type="secondary"> name of vendor or seller</Text></Col>
       </Row>
       </Card>
+      <br/>
+      <Row align="middle" justify="center"  gutter={[8, 14]}>
+      <Col flex="auto">
+  
+        </Col>
+        <Col flex="none">
+          <Form.Item>
+          <Button type="primary" htmlType="submit"> Submit </Button>
+          </Form.Item>
+        </Col>
+        <Col flex="auto">
+     
+        </Col>
+      </Row>
+
+      </Form>
       </Card>
 
     </>

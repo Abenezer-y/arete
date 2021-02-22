@@ -5,7 +5,7 @@ import NewTask from './new_task';
 // import {columns, data} from './income/income_summary';
 const { TabPane } = Tabs;
 
-const {Content, Header } = Layout;
+const {Content } = Layout;
 
 const columns = [
   {title: 'Tag', dataIndex: 'tag', align: 'center',  },
@@ -21,19 +21,13 @@ const columns = [
 export default function TaskSummary() {
   const [tasks, setTasks] = useState([])
 
-//   const successCallback = (data) =>{
-//     console.log(data);
-//     console.log(data.data);
-//     setTasks(data.data)
-//     console.log(tasks);
-//   }
   const failureCallback = (error) => {
       console.error("Error: " + error);}
 
 
   useEffect( ()=>{     
   try {
-    request.get('https://arete-server.herokuapp.com/api/tasks/', { getResponse: true }).then((data)=>{setTasks(data.data)}).catch(failureCallback);
+    request.get('https://arete-server.herokuapp.com/api/activities', { getResponse: true }).then((data)=>{setTasks(data.data)}).catch(failureCallback);
   } catch (error) {
     failureCallback({ error });
   }
@@ -42,7 +36,6 @@ export default function TaskSummary() {
       
     return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header></Header>
       <Content style={{ margin: '0 16px' }}>
         <Tabs defaultActiveKey="1">
           <TabPane tab="Task Summary"  key="1">

@@ -1,7 +1,7 @@
 // task_form
 // TaskForm
 
-import { Form, Input, Button, Select, DatePicker, Card, Row, Col } from 'antd';
+import { Form, Input, Button, Select, DatePicker, Card, Row, Col, Typography } from 'antd';
 import React from 'react';
 import TaskBreakdown from './task_creation/task_breakdown';
 import TaskTrip from './task_creation/task_trip';
@@ -10,8 +10,7 @@ import request from 'umi-request';
 import './task_creation/new-task.css';
 
 const { RangePicker } = DatePicker;
-// const { Option } = Select;
-
+const { Text } = Typography;
 
 let tag = [{ label: 'Urgent', value: 'urgent' }, 
            { label: 'Recurring', value: 'recurring' },
@@ -59,7 +58,7 @@ class NewTask extends React.Component {
 
         </Form.Item>
 
-        <Form.Item name="task_duration" label="Assignment and Delivery date" {...this.rangeConfig}>
+        <Form.Item name="task_duration" label={<Text ellipsis= {true} >Assignment and Delivery date</Text>} {...this.rangeConfig}>
             <RangePicker />
           </Form.Item>
             <Form.Item name="task_title" label="Title" rules={[ { required: true, }, ]} >
@@ -71,7 +70,7 @@ class NewTask extends React.Component {
             <Form.Item name="objective" label="Objective">
                   <Input.TextArea />
             </Form.Item>
-          </Card>
+   
            <br />
           <Form.Item >
             <TaskRequirements />
@@ -93,9 +92,17 @@ class NewTask extends React.Component {
 
         <br></br>
         <Form.Item>
-          <Button type="primary" htmlType="submit"> Submit </Button>
-          {/* <Button htmlType="button" onClick={this.onReset}> Reset </Button> */}
+        <Row align="middle" justify="center" >
+          <Col flex='auto'></Col>
+          <Col flex='none'>
+            <Form.Item>
+              <Button type="primary" htmlType="submit"> Submit </Button>
+            </Form.Item>
+          </Col>
+          <Col flex='auto'></Col>
+        </Row>
         </Form.Item>
+        </Card>
       </Form>
     );
   }

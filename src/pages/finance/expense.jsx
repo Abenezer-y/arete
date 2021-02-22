@@ -8,8 +8,10 @@ const { TabPane } = Tabs;
 const columns = [
   {title: 'Ref', dataIndex: 'id', align: 'center', render: text => <div>{text}</div>, },
   {title: 'Date', dataIndex: 'date', align: 'center' },
-  {title: 'Amount', className: 'column-money', dataIndex: 'amount', align: 'right',},
+  {title: 'Transaction Type', dataIndex: 'type',},
   {title: 'Description', dataIndex: 'description',},
+  {title: 'Amount', className: 'column-money', dataIndex: 'amount', align: 'right',},
+  {title: 'Receipt Number', dataIndex: 'receipt_number',},
 
 ];
 
@@ -54,19 +56,13 @@ function stat_render () {
 export default function ExpenseLayout() {
   const [expenses, setExpenses] = useState([])
 
-  // const successCallback = (data) =>{
-  //   console.log(data);
-  //   console.log(data.data);
-  //   setExpenses(data.data)
-  //   console.log(expenses);
-  // }
   const failureCallback = (error) => {
       console.error("Error: " + error);}
 
 
   useEffect( ()=>{     
   try {
-    request.get('https://arete-server.herokuapp.com/api/incomes', { getResponse: true }).then((data)=>{setExpenses(data.data)}).catch(failureCallback);
+    request.get('https://arete-server.herokuapp.com/api/expenses', { getResponse: true }).then((data)=>{setExpenses(data.data)}).catch(failureCallback);
   } catch (error) {
     failureCallback({ error });
   }
@@ -74,18 +70,14 @@ export default function ExpenseLayout() {
     return (
 
     <Layout style={{ minHeight: '100vh' }}>
-      
       <Content style={{ margin: '0 16px' }}>
-    
-    
-        <Tabs defaultActiveKey="2">
+          <Tabs defaultActiveKey="2">
           <TabPane tab="Summary"  key="1"> 
           <Table columns={columns} dataSource={expenses} bordered title={() => 'Header'} footer={() => 'Footer'} />
           </TabPane>
           <TabPane tab="Expense Registration" key="2"> <Expense /> </TabPane>
           <TabPane tab="Expense planning" key="3"> {stat_render} </TabPane>
         </Tabs>
-       
       </Content>
     </Layout>
 

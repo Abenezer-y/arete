@@ -1,13 +1,13 @@
 import React , {useState, useRef, useEffect} from 'react';
-import { Table, Tabs, Card, Row, Col, Layout, Form, Input, InputNumber, DatePicker, Button } from 'antd';
+import { Table, Tabs, Card, Row, Col, Layout, Form, Input, InputNumber, DatePicker, Button, Typography, Select } from 'antd';
 import request from 'umi-request';
 // import {columns, data} from './income/income_summary';
 const { TabPane } = Tabs;
 
-const {Content, Header } = Layout;
+const {Content } = Layout;
 
 const modalFormlayout = { labelCol: { span: 4 }, wrapperCol: { span: 24 },};
-
+const { Title } = Typography;
 const columns = [
   {title: 'Ref', dataIndex: 'id', align: 'center', render: text => <div>{text}</div>, },
   {title: 'Date', dataIndex: 'date', align: 'center' },
@@ -16,16 +16,13 @@ const columns = [
 ];
 
 
+let banks = [{ label: 'Bank 1', value: 1 }, 
+           { label: 'Bank 2', value: 2 },
+           { label: 'Bank 3', value: 3 },]
 
 export default function IncomeLayout() {
   const [table_values, setTable] = useState([])
 
-  // const successCallback = (data) =>{
-  //   console.log(data);
-  //   console.log(data.data);
-  //   setTable(data.data)
-  //   console.log(table_values);
-  // }
   const failureCallback = (error) => {
       console.error("Error: " + error);}
 
@@ -35,7 +32,7 @@ export default function IncomeLayout() {
 
   useEffect( ()=>{     
   try {
-    request.get('https://arete-server.herokuapp.com/api/incomes', { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback);
+    request.get('http://127.0.0.1:5000/api/incomes', { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback);
   } catch (error) {
     failureCallback({ error });
   }
@@ -46,7 +43,7 @@ export default function IncomeLayout() {
 
     const dateValue = values['date'];
     const value = { ...values, 'date': dateValue.format('YYYY-MM-DD')};                           
-
+    console.log(value)
     request('https://arete-server.herokuapp.com/api/income_save', 
             {method: 'post', data: {value},}).then(function(response) 
             {console.log(response);}).catch(function(error) 
@@ -58,22 +55,24 @@ export default function IncomeLayout() {
       
     return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header></Header>
       <Content style={{ margin: '0 16px' }}>
         <Tabs defaultActiveKey="1">
           <TabPane tab="Personal Income"  key="1">
-              <Card>
-              <Form  ref = {formRef} name="income_form" onFinish={onFinish} labelAlign="right" {...modalFormlayout}>
+              <Card title= {<Title level={4}>Income Registration</Title>}>
+              <Form ref = {formRef} name="income_form" onFinish={onFinish} labelAlign="right" {...modalFormlayout}>
               <br></br> 
               <Form.Item name="date" label="Date" rules={[ { required: true, }, ]} >
                   <DatePicker />
               </Form.Item>
               <Form.Item name="amount" label="Amount" rules={[ { required: true, }, ]} >
                 <InputNumber
-                    defaultValue={0}
                     formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     parser={value => value.replace(/\$\s?|(,*)/g, '')}
                     style={{ width: 200 }}/>
+              </Form.Item>
+              <Form.Item name="bank" label="Bank" rules={[ { required: true, }, ]} >
+              <Select  placeholder="Please select bank" options={banks} style={{ maxWidth: 250}}>
+                  </Select>
               </Form.Item>
               <Form.Item name="description" label="Description" rules={[ { required: true, }, ]} >
                   <Input />

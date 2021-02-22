@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import TaskSummary from './activity/task_summary';
 import ExpenseLayout from './finance/expense';
 import IncomeLayout from './finance/income';
-
+import BankLayout from './finance/bank';
 
 
 const {Content, Footer, Sider } = Layout;
@@ -45,6 +45,8 @@ class AppFrame extends React.Component {
             <Menu.Item key="tasks" icon={<DashboardOutlined />}> Activity Manager
                <Link to="/tasks"></Link> </Menu.Item>
             <SubMenu key="finance" icon={<PieChartOutlined />} title="Financial Manager">
+              <Menu.Item key="bank"> Bank
+               <Link to="/bank"></Link> </Menu.Item>
               <Menu.Item key="income"> Income
                <Link to="/income"></Link> </Menu.Item>
               <Menu.Item key="expense">  Expense
@@ -62,6 +64,7 @@ class AppFrame extends React.Component {
                 <Route exact path="/summary"></Route>
                 <Route exact path="/analysis"></Route>
                 <Route exact path="/tasks" component={TaskSummary}></Route>
+                <Route exact path="/bank" component={BankLayout}></Route>
                 <Route exact path="/income" component={IncomeLayout}></Route>
                 <Route exact path="/expense" component={ExpenseLayout}></Route>
             </Switch>
