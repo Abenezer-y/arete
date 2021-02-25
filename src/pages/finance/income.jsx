@@ -92,7 +92,9 @@ export default function IncomeLayout() {
             Income registration layout
           </TabPane>
           <TabPane tab="Income Summary" key="3">
-            <Table columns={columns} dataSource={table_values} bordered title={() => 'Header'} footer={() => 'Footer'} />
+          <Card>
+            <Table columns={columns} dataSource={table_values} bordered title={() => 'Income Summary'}/>
+          </Card>
           </TabPane>
         </Tabs>
       </Content>

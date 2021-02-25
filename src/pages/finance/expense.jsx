@@ -72,8 +72,10 @@ export default function ExpenseLayout() {
     <Layout style={{ minHeight: '100vh' }}>
       <Content style={{ margin: '0 16px' }}>
           <Tabs defaultActiveKey="2">
-          <TabPane tab="Summary"  key="1"> 
-          <Table columns={columns} dataSource={expenses} bordered title={() => 'Header'} footer={() => 'Footer'} />
+          <TabPane tab="Expense Summary"  key="1"> 
+          <Card>
+            <Table columns={columns} dataSource={expenses} bordered title={() => 'Expense Summary'}/>
+          </Card>
           </TabPane>
           <TabPane tab="Expense Registration" key="2"> <Expense /> </TabPane>
           <TabPane tab="Expense planning" key="3"> {stat_render} </TabPane>

@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from 'react';
-import { Table, Tabs, Layout } from 'antd';
+import { Table, Tabs, Layout, Card } from 'antd';
 import request from 'umi-request';
 import BankAdd from './bank/bank_creation';
 import Withdraw from './bank/bank_withdrawal';
@@ -49,7 +49,9 @@ export default function BankLayout() {
               <Withdraw />
           </TabPane>
           <TabPane tab="Bank Accounts Summary" key="3">
-            <Table columns={columns} dataSource={table_values} bordered title={() => 'Header'} footer={() => 'Footer'} />
+            <Card>
+              <Table columns={columns} dataSource={table_values} bordered title={() => 'Bank Account Summary'} />
+            </Card>
           </TabPane>
         </Tabs>
       </Content>

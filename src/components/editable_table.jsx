@@ -46,7 +46,7 @@ const EditableCell = ({title, editable, children, dataIndex, record, handleSave,
       </Form.Item> ) : (
       <div
         className="editable-cell-value-wrap"
-        style={{paddingRight: 24, }}
+        style={{paddingRight: 2, }}
         onClick={toggleEdit}
       >
         {children}
@@ -61,83 +61,30 @@ class EditableTable extends React.Component {
   constructor(props) {
     super(props);
     this.columns = [
-      {
-        title: 'name',
-        dataIndex: 'name',
-        width: '30%',
-        editable: true,
-      },
-      {
-        title: 'age',
-        dataIndex: 'age',
-        editable: true,
-      },
-      {
-        title: 'address',
-        dataIndex: 'address',
-        editable: true,
-      },
-      {
-        title: 'Add',
-        dataIndex: 'add',
-        editable: true,
-      },
-      {
-        title: 'Ress',
-        dataIndex: 'ress',
-        editable: true,
-      },
-      {
-        title: 'operation',
-        dataIndex: 'operation',
-        render: (_, record) =>
-          this.state.dataSource.length >= 1 ? (
-            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-              Delete
-            </Popconfirm>
-          ) : null,
-      },
-    ];
-    this.state = {
-      dataSource: [
-        {
-          key: '0',
-          name: 'Edward King 0',
-          add: '32',
+      { title: 'Item', dataIndex: 'item', width: '30%', editable: true,},
+      { title: 'Price', dataIndex: 'price', editable: true, },
+      { title: 'Quantity', dataIndex: 'qty', editable: true, },
+      { title: 'Tax Rate', dataIndex: 'tax_rate', },
+      { title: 'operation', dataIndex: 'operation', render: (_, record) => this.state.dataSource.length >= 1 ? 
+                                                                          (
+                                                                            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+                                                                              Delete
+                                                                            </Popconfirm>
+                                                                          ) : null,},];
 
-          ress: '32',
-          address: 'London, Park Lane no. 0',
-        },
-        {
-          key: '1',
-          name: 'Edward King 1',
-          age: '32',
-          address: 'London, Park Lane no. 1',
-        },
-      ],
-      count: 2,
-    };
-  }
+    this.state = {dataSource: [{key: '0', item: 'item 0', price: 32, qty: 2, tax_rate: 0.15},
+                               {key: '1', item: 'item 1', price: 31, qty: 4, tax_rate: 0.15},],
+                  count: 2,};}
 
   handleDelete = (key) => {
     const dataSource = [...this.state.dataSource];
-    this.setState({
-      dataSource: dataSource.filter((item) => item.key !== key),
-    });
-  };
+    this.setState({dataSource: dataSource.filter((item) => item.key !== key),});};
+
   handleAdd = () => {
     const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      name: `Edward King ${count}`,
-      age: '32',
-      address: `London, Park Lane no. ${count}`,
-    };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
-    });
-  };
+    const newData = { key: count, item: `item ${count}`, price: '32', qty: `${count}`, tax_rate: 0.15 };
+    this.setState({dataSource: [...dataSource, newData], count: count + 1, });};
+
   handleSave = (row) => {
     const newData = [...this.state.dataSource];
     const index = newData.findIndex((item) => row.key === item.key);
@@ -150,49 +97,27 @@ class EditableTable extends React.Component {
 
   render() {
     const { dataSource } = this.state;
-    const components = {
-      body: {
-        row: EditableRow,
-        cell: EditableCell,
-      },
-    };
+    const components = { body: {row: EditableRow, cell: EditableCell,}, };
     const columns = this.columns.map((col) => {
-      if (!col.editable) {
-        return col;
-      }
-
-      return {
-        ...col,
-        onCell: (record) => ({
-          record,
-          editable: col.editable,
-          dataIndex: col.dataIndex,
-          title: col.title,
-          handleSave: this.handleSave,
-        }),
-      };
-    });
+      if (!col.editable) { return col;}
+      return {...col, onCell: (record) => ({record, editable: col.editable, dataIndex: col.dataIndex, title: col.title, 
+                                            handleSave: this.handleSave,}), }; });
     return (
 <>
       <Card title= {<Title level={4}>
-      <Row align="middle" gutter={8}>
-            <Col flex="auto">
+        <Row align="middle" gutter={8}>
+          <Col flex="auto">
             <Title level={4}>Items</Title>
-            </Col>
+          </Col>
             
-            <Col flex='none'>
-            <Button
-          onClick={this.handleAdd}
-          type="primary"
-          style={{
-            marginBottom: 16,
-          }}
-        >
-          Add a row
-        </Button>
-            </Col>
-            </Row>
-            </Title>}>
+          <Col flex='none'>
+          <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16, }}
+      >
+        Add a row
+      </Button>
+          </Col>
+          </Row>
+          </Title>}>
 
         <Table
           components={components}

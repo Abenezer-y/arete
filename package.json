@@ -7,6 +7,9 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.12.2",
+    "prop-types": "^15.7.2",
+    "rc-queue-anim": "^1.8.5",
+    "rc-tween-one": "^2.7.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
@@ -38,5 +41,7 @@
       "last 1 safari version"
     ]
   },
- "Proxy": ["https://arete-server.herokuapp.com/"]
+  "Proxy": [
+    "https://arete-server.herokuapp.com/"
+  ]
 }

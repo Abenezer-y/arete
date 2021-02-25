@@ -1,75 +1,79 @@
 // task
-
-
 //TaskDetail
 
-import React, { useState } from 'react';
-import {Card, Col, Row } from 'antd';
+import React from 'react';
+import {Card, Table, Typography, Form } from 'antd';
 
+const {Text} = Typography;
 
+const modalFormlayout = { labelCol: { span: 9 }, wrapperCol: { span: 24 },};
 
-const DescriptionItem = ({ title, content }) => (
-  <div className="site-description-item-profile-wrapper">
-    <p className="site-description-item-profile-p-label">{title}: <span>{content}</span></p>
-  </div>
-);
+const requirements = [
+  {title: 'Req #', dataIndex: 'req_num', align: 'center', },
+  {title: 'Requierment', dataIndex: 'requirement', align: 'center' },
+];
 
-const layout = { labelCol: {span: 4,}, wrapperCol: { span: 26, }, };
-                 
-const tabList = [ {key: 'tab1', tab: 'tab1',}, {key: 'tab2', tab: 'tab2',},];
-const contentList = { tab1: <p>content2</p>, tab2: <p>content2</p>, };
-const tabListNoTitle = [{key: 'article', tab: 'article',}, {key: 'app', tab: 'app',}, {key: 'project', tab: 'project',}, ];
+const procedures = [
+  {title: 'Step #', dataIndex: 'acc_num', align: 'center', },
+  {title: 'Description', dataIndex: 'procedure_procedure' },
+  {title: 'Cost', dataIndex: 'procedure_cost', align: 'right', },
+  {title: 'Hrs', dataIndex: 'procedure_hrs', align: 'right',  },
+  {title: 'Mins', dataIndex: 'procedure_mins', align: 'right' },
+  ];
 
+const trips = [
+  {title: 'Trip #', dataIndex: 'acc_num', align: 'center', },
+  {title: 'Location', dataIndex: 'trip_location' },
+  {title: 'Cost', dataIndex: 'trip_cost', align: 'right', },
+  {title: 'Hrs', dataIndex: 'trip_hrs', align: 'right',  },
+  {title: 'Mins', dataIndex: 'trip_mins', align: 'right' },
+  ];
 
 const TaskDetail = () => {
+  // const failureCallback = (error) => {
+  //   console.error("Error: " + error);}
 
-  const [key, setSelectionKey] = useState('tab1');
-  const [noTitleKey, setSelectionTitleKey] = useState('app');
+  // dataSource={table_values}
+  // useEffect( ()=>{     
+  // try {
+  //   request.get('https://arete-server.herokuapp.com/api/activities', { getResponse: true }).then((data)=>{setTasks(data.data)}).catch(failureCallback);
+  // } catch (error) {
+  //   failureCallback({ error });
+  // }
+  // }, [])
 
-  const onTabChange = (key, type) => { console.log(key, type); setSelectionKey({ [type]: key });};
-
+  // Text>Title</Text
   return (
-    <div>
-        <br />
-        <Card title="Task Detail">
-          <Row>
-            <Col span={10}> <DescriptionItem title="Full Name" content="Lily" /> </Col>
-            <Col span={10}> <DescriptionItem title="Account" content="AntDesign@example.com" /> </Col>
-          </Row>
-          <Row>
-            <Col>
-              <DescriptionItem title="Description" content="rowSelection object indicates the need for row selection" />
-            </Col>
-          </Row>
-          <Row>
-            <Col > <DescriptionItem title="Objective" content="Lily" /> </Col>
-          </Row>
+        <Card>
+          <Card title="Task Detail">
+          <Form layout="horizontal" name="userForm" labelAlign="right"  {...modalFormlayout}>
+              <Form.Item name="vendor" label="Title">
+                  <Text>Title</Text>
+              </Form.Item>
+              <Form.Item name="objective" label="Objective">
+                  <Text>Title</Text>
+              </Form.Item>
+              <Form.Item name="description" label="Description">
+                  <Text>Title</Text>
+              </Form.Item>
+              <Form.Item name="deadline" label="Deadland">
+                  <Text>Title</Text>
+              </Form.Item>
+            </Form>
+          </Card>
+          <br></br>
+          <Card title="Requirements">
+              <Table columns={requirements} />
+          </Card>
+          <br></br>
+          <Card title="Travel Information">
+              <Table columns={trips} />
+          </Card> 
+          <br></br>
+          <Card title="Procedures">
+              <Table columns={procedures} />
+          </Card> 
         </Card>
-        <br></br>
-        <Card title="Requirements">
-        <Row>
-          <Col> <DescriptionItem title="Reqirement 01" content="Lily" /> </Col>
-        </Row>
-        <Row>
-          <Col> <DescriptionItem title="Reqirement 02" content="AntDesign@example.com" /> </Col>
-        </Row>
-        </Card>
-        <br></br>
-        <Card title="Procedures">
-        <Row>
-          <Col> <DescriptionItem title="Step 01" content="Lily" /> </Col>
-        </Row>
-        <Row>
-          <Col> <DescriptionItem title="Step 02" content="AntDesign@example.com" /> </Col>
-        </Row>
-        </Card>
-        <br></br>
-
-        <Card style={{ width: '100%' }} tabList={tabList} activeTabKey={key}
-          onTabChange={key => {onTabChange(key, 'key'); }} >
-          {contentList[key]}
-        </Card> 
-    </div>
   );
 };
 

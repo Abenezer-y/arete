@@ -1,13 +1,13 @@
 import React , {useRef} from 'react';
 import { Card, Row, Col, Form, Input, InputNumber, Button, Typography, DatePicker, Select } from 'antd';
-// import request from 'umi-request';
+import request from 'umi-request';
 
 const Formlayout = { labelCol: { span: 6 }, wrapperCol: { span: 24 },};
 const { Title } = Typography;
 
-let banks = [{ label: 'Bank 1', value: 'bank_1' }, 
-           { label: 'Bank 2', value: 'bank_2' },
-           { label: 'Bank 3', value: 'bank_3' },]
+let banks = [{ label: 'Bank 1', value: 1 }, 
+           { label: 'Bank 2', value: 2 },
+           { label: 'Bank 3', value: 3 },]
 
 export default function Withdraw() {
 
@@ -17,10 +17,10 @@ export default function Withdraw() {
   const onFinish = (values) => { 
     const value = { ...values, 'date': values['date'].format('YYYY-MM-DD'),};
     console.log(value)
-    // request('https://arete-server.herokuapp.com/api/income_save', 
-    //         {method: 'post', data: {value},}).then(function(response) 
-    //         {console.log(response);}).catch(function(error) 
-    //         {console.log(error);});
+    request('https://arete-server.herokuapp.com/api/add_withdrawal', 
+            {method: 'post', data: {value},}).then(function(response) 
+            {console.log(response);}).catch(function(error) 
+            {console.log(error);});
     onReset()
   };
       
