@@ -6,12 +6,12 @@ import {BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 // import DashBoard from './dashboard/dashboard';
-
+import Summary from './dashBoard/summary';
 import TaskSummary from './activity/task_summary';
 import ExpenseLayout from './finance/expense';
 import IncomeLayout from './finance/income';
 import BankLayout from './finance/bank';
-
+import TaskDetail from './activity/task_update/task_detail';
 
 const {Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -60,13 +60,14 @@ class AppFrame extends React.Component {
           <Content style={{ margin: '0 16px' }}>
             
             <Switch>
-                <Route exact path="/"></Route>
-                <Route exact path="/summary"></Route>
+                <Route exact path="/" component={Summary}></Route>
+                <Route exact path="/summary" component={Summary}></Route>
                 <Route exact path="/analysis"></Route>
                 <Route exact path="/tasks" component={TaskSummary}></Route>
                 <Route exact path="/bank" component={BankLayout}></Route>
                 <Route exact path="/income" component={IncomeLayout}></Route>
                 <Route exact path="/expense" component={ExpenseLayout}></Route>
+                <Route exact path="/detail/:taskkey" component={TaskDetail}></Route>
             </Switch>
            
           </Content>

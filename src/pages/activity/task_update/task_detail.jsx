@@ -1,20 +1,20 @@
 // task
 //TaskDetail
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card, Table, Typography, Form } from 'antd';
-
+import request from 'umi-request';
 const {Text} = Typography;
 
 const modalFormlayout = { labelCol: { span: 9 }, wrapperCol: { span: 24 },};
 
 const requirements = [
-  {title: 'Req #', dataIndex: 'req_num', align: 'center', },
-  {title: 'Requierment', dataIndex: 'requirement', align: 'center' },
+  {title: 'Req #', dataIndex: 'key', align: 'center', },
+  {title: 'Requierment', dataIndex: 'requirement' },
 ];
 
 const procedures = [
-  {title: 'Step #', dataIndex: 'acc_num', align: 'center', },
+  {title: 'Step #', dataIndex: 'key', align: 'center', },
   {title: 'Description', dataIndex: 'procedure_procedure' },
   {title: 'Cost', dataIndex: 'procedure_cost', align: 'right', },
   {title: 'Hrs', dataIndex: 'procedure_hrs', align: 'right',  },
@@ -22,7 +22,7 @@ const procedures = [
   ];
 
 const trips = [
-  {title: 'Trip #', dataIndex: 'acc_num', align: 'center', },
+  {title: 'Trip #', dataIndex: 'key', align: 'center', },
   {title: 'Location', dataIndex: 'trip_location' },
   {title: 'Cost', dataIndex: 'trip_cost', align: 'right', },
   {title: 'Hrs', dataIndex: 'trip_hrs', align: 'right',  },
@@ -30,17 +30,34 @@ const trips = [
   ];
 
 const TaskDetail = () => {
-  // const failureCallback = (error) => {
-  //   console.error("Error: " + error);}
+  
+  const [task, setTask] = useState([])
+  const [requirement, setRequirement] = useState([])
+  const [step, setStep] = useState([])
+  const [trip, setTrip] = useState([])
+  // const [updates, setUpdates] = useState([])
 
-  // dataSource={table_values}
-  // useEffect( ()=>{     
-  // try {
-  //   request.get('https://arete-server.herokuapp.com/api/activities', { getResponse: true }).then((data)=>{setTasks(data.data)}).catch(failureCallback);
-  // } catch (error) {
-  //   failureCallback({ error });
-  // }
-  // }, [])
+  const failureCallback = (error) => {
+    console.error("Error: " + error);}
+
+  const successCallback = (data) => {
+    const all_data = data.data
+
+    setTask(all_data[0].acivity)
+    setStep(all_data[1].procedure)
+    setTrip(all_data[2].trip)
+    setRequirement(all_data[3].requirement)
+  }
+  // dataSource={requirement}
+  useEffect( ()=>{   
+  const task_address = window.location.href
+  const task_id = task_address.charAt(task_address.length-1)
+  try {
+    request(`https://arete-server.herokuapp.com/api/activity/${task_id}`, {method: 'get', getResponse: true }).then(successCallback).catch(failureCallback);
+  } catch (error) {
+    failureCallback({ error });
+  }
+  }, [])
 
   // Text>Title</Text
   return (
@@ -48,31 +65,32 @@ const TaskDetail = () => {
           <Card title="Task Detail">
           <Form layout="horizontal" name="userForm" labelAlign="right"  {...modalFormlayout}>
               <Form.Item name="vendor" label="Title">
-                  <Text>Title</Text>
+                  <Text>{task.title}</Text>
               </Form.Item>
               <Form.Item name="objective" label="Objective">
-                  <Text>Title</Text>
+                  <Text>{task.objective}</Text>
               </Form.Item>
               <Form.Item name="description" label="Description">
-                  <Text>Title</Text>
+                  <Text>{task.description}</Text>
               </Form.Item>
               <Form.Item name="deadline" label="Deadland">
-                  <Text>Title</Text>
+                  <Text>{task.date_2}</Text>
               </Form.Item>
             </Form>
           </Card>
           <br></br>
+          <Card title="Procedures">
+              <Table columns={procedures} dataSource={step} pagination={{ position: ['none'] }}/>
+          </Card> 
+          <br></br>
           <Card title="Requirements">
-              <Table columns={requirements} />
+              <Table columns={requirements} dataSource={requirement}/>
           </Card>
           <br></br>
           <Card title="Travel Information">
-              <Table columns={trips} />
+              <Table columns={trips} dataSource={trip}/>
           </Card> 
-          <br></br>
-          <Card title="Procedures">
-              <Table columns={procedures} />
-          </Card> 
+
         </Card>
   );
 };

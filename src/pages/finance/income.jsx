@@ -39,19 +39,14 @@ export default function IncomeLayout() {
   }, [])
     
   const onFinish = (values) => { 
-
-
     const dateValue = values['date'];
     const value = { ...values, 'date': dateValue.format('YYYY-MM-DD')};                           
     console.log(value)
     request('https://arete-server.herokuapp.com/api/income_save', 
             {method: 'post', data: {value},}).then(function(response) 
             {console.log(response);}).catch(function(error) 
-            {console.log(error);});
-    
-    
-    onReset()
-  };
+            {console.log(error);});   
+    onReset()};
       
     return (
     <Layout style={{ minHeight: '100vh' }}>
