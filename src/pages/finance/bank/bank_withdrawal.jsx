@@ -1,23 +1,35 @@
-import React , {useRef} from 'react';
+import React , {useState, useRef, useEffect} from 'react';
 import { Card, Row, Col, Form, Input, InputNumber, Button, Typography, DatePicker, Select } from 'antd';
 import request from 'umi-request';
 
 const Formlayout = { labelCol: { span: 6 }, wrapperCol: { span: 24 },};
 const { Title } = Typography;
 
-let banks = [{ label: 'Bank 1', value: 1 }, 
-           { label: 'Bank 2', value: 2 },
-           { label: 'Bank 3', value: 3 },]
 
 export default function Withdraw() {
-
+  const [bank_values, setBank] = useState([])
   const formRef = useRef('');
   const onReset = () => {formRef.current.resetFields();};
-  
+  const failureCallback = (error) => {
+    console.error("Error: " + error);}
+  const onSuccefulCallback = (data) => {
+    console.log(data)
+    const bank_data = data[1].bank_selection
+    console.log(data[1].bank_selection)
+    setBank(bank_data)
+  }
+  useEffect( ()=>{     
+    try {
+       request.get('http://127.0.0.1:5000/api/banks', { getResponse: true }).then((data)=>{onSuccefulCallback(data.data)}).catch(failureCallback);
+    } catch (error) {
+      failureCallback({ error });
+    }
+    }, [])
+      
   const onFinish = (values) => { 
     const value = { ...values, 'date': values['date'].format('YYYY-MM-DD'),};
     console.log(value)
-    request('https://arete-server.herokuapp.com/api/add_withdrawal', 
+    request('http://127.0.0.1:5000/api/add_withdrawal', 
             {method: 'post', data: {value},}).then(function(response) 
             {console.log(response);}).catch(function(error) 
             {console.log(error);});
@@ -38,7 +50,7 @@ export default function Withdraw() {
               style={{ width: 150 }}/>
         </Form.Item>
         <Form.Item name="bank" label="Bank" rules={[ { required: true, }, ]} >
-        <Select  placeholder="Please select bank" options={banks} style={{ maxWidth: 250}}>
+        <Select  placeholder="Please select bank" options={bank_values} style={{ maxWidth: 250}}>
             </Select>
         </Form.Item>
         <Form.Item name="ck_num" label="Check Number" rules={[ { required: true, }, ]} >

@@ -42,7 +42,7 @@ export default function Summary() {
     {type: 'Normal', value: 25,},];
     return (
         <Card>
-            <Card title="Activity Summary">
+          <Card title="Activity Summary">
             <Row align="top" justify="center" >
                 <Col flex="auto">
                     <Card title="Active Tasks">
@@ -51,20 +51,16 @@ export default function Summary() {
                 </Col>
                 <Col flex='auto'>
                     <Card title="Compeletion rate">
-
                         <GaugeChart/>
                     </Card>
                 </Col>
             </Row>
             </Card>
-
           <br></br>
-          <Card title="Travel Information">
-             
+          <Card title="Income Summary">    
           </Card> 
           <br></br>
-          <Card title="Procedures">
-              
+          <Card title="Expense Summary">
           </Card> 
         </Card>
     );

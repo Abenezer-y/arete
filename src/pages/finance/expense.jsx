@@ -1,4 +1,4 @@
-import { Layout,  Tabs,  Table, Statistic, Row, Col, Card} from 'antd';
+import { Layout,  Tabs,  Table, Statistic, Row, Col, Card, Button} from 'antd';
 import Expense from './expense/expense_registration';
 import React , {useState,  useEffect} from 'react';
 import request from 'umi-request';
@@ -62,7 +62,7 @@ export default function ExpenseLayout() {
 
   useEffect( ()=>{     
   try {
-    request.get('https://arete-server.herokuapp.com/api/expenses', { getResponse: true }).then((data)=>{setExpenses(data.data)}).catch(failureCallback);
+    request.get('http://127.0.0.1:5000/api/expenses', { getResponse: true }).then((data)=>{setExpenses(data.data)}).catch(failureCallback);
   } catch (error) {
     failureCallback({ error });
   }
@@ -73,9 +73,10 @@ export default function ExpenseLayout() {
       <Content style={{ margin: '0 16px' }}>
           <Tabs defaultActiveKey="2">
           <TabPane tab="Expense Summary"  key="1"> 
-          <Card>
-            <Table columns={columns} dataSource={expenses} bordered title={() => 'Expense Summary'}/>
-          </Card>
+     
+            <Table columns={columns} dataSource={expenses} bordered title={() => <><Row><Col flex='auto'>Expense Summary</Col><Col flex='none'>
+              <Button onClick ={() => request.get('http://127.0.0.1:5000/api/expenses', { getResponse: true }).then((data)=>{setExpenses(data.data)}).catch(failureCallback)}>Load Data</Button></Col></Row> </>}/>
+      
           </TabPane>
           <TabPane tab="Expense Registration" key="2"> <Expense /> </TabPane>
           <TabPane tab="Expense planning" key="3"> {stat_render} </TabPane>

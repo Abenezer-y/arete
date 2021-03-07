@@ -16,15 +16,19 @@ const columns = [
 ];
 
 
-let banks = [{ label: 'Bank 1', value: 1 }, 
-           { label: 'Bank 2', value: 2 },
-           { label: 'Bank 3', value: 3 },]
 
 export default function IncomeLayout() {
   const [table_values, setTable] = useState([])
-
+  const [bank_values, setBank] = useState([])
   const failureCallback = (error) => {
       console.error("Error: " + error);}
+
+  const onSuccefulCallback = (data) => {
+    console.log(data)
+    const bank_data = data[1].bank_selection
+    console.log(data[1].bank_selection)
+    setBank(bank_data)
+  }
 
   const formRef = useRef('');
 
@@ -32,7 +36,8 @@ export default function IncomeLayout() {
 
   useEffect( ()=>{     
   try {
-    request.get('https://arete-server.herokuapp.com/api/incomes', { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback);
+    request.get('http://127.0.0.1:5000/api/incomes', { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback);
+    request.get('http://127.0.0.1:5000/api/banks', { getResponse: true }).then((data)=>{onSuccefulCallback(data.data)}).catch(failureCallback);
   } catch (error) {
     failureCallback({ error });
   }
@@ -42,7 +47,7 @@ export default function IncomeLayout() {
     const dateValue = values['date'];
     const value = { ...values, 'date': dateValue.format('YYYY-MM-DD')};                           
     console.log(value)
-    request('https://arete-server.herokuapp.com/api/income_save', 
+    request('http://127.0.0.1:5000/api/income_save', 
             {method: 'post', data: {value},}).then(function(response) 
             {console.log(response);}).catch(function(error) 
             {console.log(error);});   
@@ -66,7 +71,7 @@ export default function IncomeLayout() {
                     style={{ width: 200 }}/>
               </Form.Item>
               <Form.Item name="bank" label="Bank" rules={[ { required: true, }, ]} >
-              <Select  placeholder="Please select bank" options={banks} style={{ maxWidth: 250}}>
+              <Select  placeholder="Please select bank" options={bank_values} style={{ maxWidth: 250}}>
                   </Select>
               </Form.Item>
               <Form.Item name="description" label="Description" rules={[ { required: true, }, ]} >
@@ -87,9 +92,10 @@ export default function IncomeLayout() {
             Income registration layout
           </TabPane>
           <TabPane tab="Income Summary" key="3">
-          <Card>
-            <Table columns={columns} dataSource={table_values} bordered title={() => 'Income Summary'}/>
-          </Card>
+        
+            <Table columns={columns} dataSource={table_values} bordered title={() => <><Row><Col flex='auto'>Income Summary</Col><Col flex='none'>
+              <Button onClick ={() => request.get('http://127.0.0.1:5000/api/incomes', { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback)}>Load Data</Button></Col></Row> </>}/>
+       
           </TabPane>
         </Tabs>
       </Content>

@@ -13,7 +13,7 @@ export default function BankAdd() {
   
   const onFinish = (values) => { 
     console.log(values)
-    request('https://arete-server.herokuapp.com/api/bank_save', 
+    request('http://127.0.0.1:5000/api/bank_save', 
             {method: 'post', data: {values},}).then(function(response) 
             {console.log(response);}).catch(function(error) 
             {console.log(error);});

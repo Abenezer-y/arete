@@ -2,11 +2,11 @@
 //TaskDetail
 
 import React, {useEffect, useState} from 'react';
-import {Card, Table, Typography, Form } from 'antd';
+import {Card, Table, Typography, Form, Input, Button} from 'antd';
 import request from 'umi-request';
 const {Text} = Typography;
 
-const modalFormlayout = { labelCol: { span: 9 }, wrapperCol: { span: 24 },};
+const modalFormlayout = { labelCol: { span: 5 }, wrapperCol: { span: 24 },};
 
 const requirements = [
   {title: 'Req #', dataIndex: 'key', align: 'center', },
@@ -53,7 +53,7 @@ const TaskDetail = () => {
   const task_address = window.location.href
   const task_id = task_address.charAt(task_address.length-1)
   try {
-    request(`https://arete-server.herokuapp.com/api/activity/${task_id}`, {method: 'get', getResponse: true }).then(successCallback).catch(failureCallback);
+    request(`http://127.0.0.1:5000/api/activity/${task_id}`, {method: 'get', getResponse: true }).then(successCallback).catch(failureCallback);
   } catch (error) {
     failureCallback({ error });
   }
@@ -62,22 +62,31 @@ const TaskDetail = () => {
   // Text>Title</Text
   return (
         <Card>
-          <Card title="Task Detail">
+          <Card title={`Task Detail: ${task.title}`}>
           <Form layout="horizontal" name="userForm" labelAlign="right"  {...modalFormlayout}>
-              <Form.Item name="vendor" label="Title">
-                  <Text>{task.title}</Text>
+              <Form.Item name="description" label="Description">
+                  <Text>{task.description}</Text>
               </Form.Item>
               <Form.Item name="objective" label="Objective">
                   <Text>{task.objective}</Text>
               </Form.Item>
-              <Form.Item name="description" label="Description">
-                  <Text>{task.description}</Text>
-              </Form.Item>
+
               <Form.Item name="deadline" label="Deadland">
                   <Text>{task.date_2}</Text>
               </Form.Item>
             </Form>
           </Card>
+          <br></br>
+          <Card title="Progress Update">
+          <Form >
+              <Form.Item name="status">
+                  <Input.TextArea placeholder="Update Status"/>
+              </Form.Item>
+              <Form.Item>
+                  <Button type="primary" htmlType="submit"> Update </Button>
+              </Form.Item>
+          </Form>
+          </Card> 
           <br></br>
           <Card title="Procedures">
               <Table columns={procedures} dataSource={step} pagination={{ position: ['none'] }}/>

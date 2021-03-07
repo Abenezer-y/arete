@@ -28,7 +28,7 @@ const ModalForm = ({ visible, onCancel }) => {
   const onOk = () => { form.submit(); };
 
   return (
-    <Modal title="Basic Drawer" visible={visible} onOk={onOk} onCancel={onCancel}>
+    <Modal title="Vendor Information" visible={visible} onOk={onOk} onCancel={onCancel}>
       <Form form={form} layout="horizontal" name="userForm" labelAlign="right"  {...modalFormlayout}>
         <Form.Item name="vendor" label="Vendor" rules={[ { required: true, }, ]} >
           <Input />
@@ -37,6 +37,9 @@ const ModalForm = ({ visible, onCancel }) => {
           <InputNumber />
         </Form.Item>
         <Form.Item name="phone" label="Telephone number" rules={[ { required: true, }, ]} >
+          <InputNumber />
+        </Form.Item>
+        <Form.Item name="address" label="Address" rules={[ { required: true, }, ]} >
           <InputNumber />
         </Form.Item>
       </Form>
@@ -59,7 +62,7 @@ const Expense = () => {
     const value = { ...values, 'date': values['date'].format('YYYY-MM-DD'),};
                             
     console.log(value)
-    request('https://arete-server.herokuapp.com/api/expense_save', {method: 'post', data: {value},})
+    request('http://127.0.0.1:5000/api/expense_save', {method: 'post', data: {value},})
     .then(function(response) {console.log(response);})
     .catch(function(error) {console.log(error);});
                          
@@ -74,7 +77,7 @@ const Expense = () => {
           onFinish={onFinish}>
       
         <Form.Item name="type"  label={<span>Transaction type</span>} rules={[ { required: true, }, ]} >
-        <Select defaultValue="purchase" style={{ width: 200 }} >
+        <Select style={{ width: 200 }} >
           <Option value="service">Service</Option>
           <Option value="purchase">Purchase</Option>
         </Select>

@@ -23,7 +23,7 @@ export default function TaskSummary() {
 
   useEffect( ()=>{     
         try {
-          request.get('https://arete-server.herokuapp.com/api/activities', { getResponse: true }).then((data)=>{setTasks(data.data)}).catch(failureCallback);
+          request.get('http://127.0.0.1:5000/api/activities', { getResponse: true }).then((data)=>{setTasks(data.data)}).catch(failureCallback);
         } catch (error) {
           failureCallback({ error });
         }

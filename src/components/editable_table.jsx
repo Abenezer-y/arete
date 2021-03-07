@@ -65,7 +65,7 @@ class EditableTable extends React.Component {
       { title: 'Price', dataIndex: 'price', editable: true, },
       { title: 'Quantity', dataIndex: 'qty', editable: true, },
       { title: 'Tax Rate', dataIndex: 'tax_rate', },
-      { title: 'operation', dataIndex: 'operation', render: (_, record) => this.state.dataSource.length >= 1 ? 
+      { title: '', dataIndex: 'operation', width: 80, render: (_, record) => this.state.dataSource.length >= 1 ? 
                                                                           (
                                                                             <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
                                                                               Delete
@@ -119,8 +119,7 @@ class EditableTable extends React.Component {
           </Row>
           </Title>}>
 
-        <Table
-          components={components}
+        <Table components={components}
           rowClassName={() => 'editable-row'}
           bordered
           dataSource={dataSource}

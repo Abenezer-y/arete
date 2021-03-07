@@ -13,7 +13,7 @@ import IncomeLayout from './finance/income';
 import BankLayout from './finance/bank';
 import TaskDetail from './activity/task_update/task_detail';
 
-const {Content, Footer, Sider } = Layout;
+const {Content, Footer, Sider, Header } = Layout;
 const { SubMenu } = Menu;
 
 
@@ -33,7 +33,13 @@ class AppFrame extends React.Component {
     const { collapsed } = this.state;
     return (
       <Router> 
+      <Layout>
+        <Header></Header>
+
       <Layout style={{ minHeight: '100vh' }}>
+        
+  
+   
           <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
           <Menu theme="dark" defaultSelectedKeys={['summary']} mode="inline">
             <SubMenu key="dashboard" icon={<DashboardOutlined />} title="DashBoard">
@@ -55,9 +61,9 @@ class AppFrame extends React.Component {
           </Menu>
         </Sider>
 
-        <Layout className="site-layout">
-
-          <Content style={{ margin: '0 16px' }}>
+        <Layout className="site-layout"  >
+        
+          <Content >
             
             <Switch>
                 <Route exact path="/" component={Summary}></Route>
@@ -72,11 +78,15 @@ class AppFrame extends React.Component {
            
           </Content>
 
-          <Footer style={{ textAlign: 'center' }}>Arete Management Tool 2021</Footer>
+          <Footer style={{ textAlign: 'center', background: '#2A4058', height: 45 }}>Arete Management Tool 2021</Footer>
         </Layout>
 
-      </Layout>
+             
+        </Layout>
+        
+        </Layout>
       </Router>
+
     );
 }
 }
