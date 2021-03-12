@@ -1,8 +1,8 @@
 import { Form, Input, Button, Checkbox, Card, Layout, Col, Row , Alert} from 'antd';
 import '../App.css';
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
+import {  useHistory } from "react-router-dom"
 
 const { Header, Content } = Layout;
 
@@ -18,21 +18,21 @@ const tailLayout = {
 const Login = () => {
   const { login } = useAuth()
   const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const history = useHistory()
 
   async function onFinish(value) {
    
     try {
       setError("")
-      setLoading(true)
+      // setLoading(true)
       await login(value.username, value.password)
       history.push("/")
     } catch {
       setError("Failed to log in")
     }
 
-    setLoading(false)
+    // setLoading(false)
   }
   
   const onFinishFailed = (errorInfo) => {
