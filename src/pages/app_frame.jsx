@@ -15,8 +15,7 @@ import TaskDetail from './activity/task_update/task_detail';
 
 const {Content, Footer, Sider, Header } = Layout;
 const { SubMenu } = Menu;
-
-
+// 
 class AppFrame extends React.Component {
   state = {
     collapsed: false,};

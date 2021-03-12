@@ -5,6 +5,7 @@ import { Select } from 'antd';
 import EditableTable from '../../../components/editable_table';
 import request from 'umi-request';
 
+const backend_server = process.env.REACT_APP_BACKEND_URI
 
 const { Option } = Select;
 const { Text, Title } = Typography;
@@ -62,7 +63,7 @@ const Expense = () => {
     const value = { ...values, 'date': values['date'].format('YYYY-MM-DD'),};
                             
     console.log(value)
-    request('http://127.0.0.1:5000/api/expense_save', {method: 'post', data: {value},})
+    request(`${backend_server}expense_save`, {method: 'post', data: {value},})
     .then(function(response) {console.log(response);})
     .catch(function(error) {console.log(error);});
                          
@@ -75,14 +76,16 @@ const Expense = () => {
     <Card  title="Expense Registration Form">
     <Form form={main_form} ref={formRef} layout="horizontal" name="userForm" labelAlign="right"  {...formItemLayout}
           onFinish={onFinish}>
-      
+        <Form.Item name="date" label={<Text strong= "true">Date</Text>} rules={[ { required: true, }, ]} >
+          <DatePicker />
+        </Form.Item>  
         <Form.Item name="type"  label={<span>Transaction type</span>} rules={[ { required: true, }, ]} >
         <Select style={{ width: 200 }} >
           <Option value="service">Service</Option>
           <Option value="purchase">Purchase</Option>
         </Select>
         </Form.Item> 
-           
+ 
         <Form.Item name="amount" label="Amount" rules={[ { required: true, }, ]} >
         <InputNumber
             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -112,19 +115,10 @@ const Expense = () => {
 
       <br />
       <Card title= {<Title level={4}>Receipt Details</Title>}>
-        <Row align="middle" >
-          <Col flex='auto'>
-            <Form.Item name="date" label={<Text strong= "true">Date</Text>} rules={[ { required: true, }, ]} >
-              <DatePicker />
-            </Form.Item>
-          </Col>
-          <Col flex='auto'>
-            <Form.Item name="receipt_number" label={<Text strong= "true">Receipt Number</Text>} rules={[ { required: true, }, ]} >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-      </Card>
+      <Form.Item name="receipt_number" label={<Text strong= "true">Receipt Number</Text>} rules={[ { required: true, }, ]} >
+              <Input style={{ maxWidth: 200 }}/>
+      </Form.Item>
+
       <br />
       <Card title= {<Title level={4}>
       <Row align="middle" gutter={8}>
@@ -186,34 +180,22 @@ const Expense = () => {
         <EditableTable/>
       <br />
       <Card title= {<Title level={4}>Upload Receipt</Title>}>
-     
-
         <Upload name="logo" action="/upload.do" listType="picture">
           <Button icon={<UploadOutlined />}>Click to upload</Button>
         </Upload>
-      
       </Card>
-      <br />
-      <Card title= {<Title level={4}>Amount Summary</Title>}>
-      <Row align="middle" justify="space-around" gutter={[8, 14]}>
-            <Col flex="150px"><Text strong= "true"> Name: </Text></Col>
-            <Col><Text  type="secondary"> name of vendor or seller</Text></Col>
-            <Col flex="150px"><Text strong= "true"> Name: </Text></Col>
-            <Col><Text  type="secondary"> name of vendor or seller</Text></Col>
-      </Row>
+
       </Card>
       <br/>
       <Row align="middle" justify="center"  gutter={[8, 14]}>
       <Col flex="auto">
-  
         </Col>
         <Col flex="none">
           <Form.Item>
-          <Button type="primary" htmlType="submit"> Submit </Button>
+            <Button type="primary" htmlType="submit"> Submit </Button>
           </Form.Item>
         </Col>
         <Col flex="auto">
-     
         </Col>
       </Row>
 

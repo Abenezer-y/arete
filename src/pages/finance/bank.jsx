@@ -8,7 +8,7 @@ const { TabPane } = Tabs;
 
 const {Content } = Layout;
 
-// const { Title } = Typography;
+const backend_server = process.env.REACT_APP_BACKEND_URI
 
 const columns = [
   {title: 'Acc #', dataIndex: 'key', align: 'center', },
@@ -41,8 +41,8 @@ export default function BankLayout() {
     
     useEffect( ()=>{     
     try {
-      request.get('http://127.0.0.1:5000/api/banks', { getResponse: true }).then((data)=>{onSuccefulCallback(data.data)}).catch(failureCallback);
-      request.get('http://127.0.0.1:5000/api/withdrawals', { getResponse: true }).then((data)=>{setWithdraw(data.data)}).catch(failureCallback)
+      request.get(`${backend_server}banks`, { getResponse: true }).then((data)=>{onSuccefulCallback(data.data)}).catch(failureCallback);
+      request.get(`${backend_server}withdrawals`, { getResponse: true }).then((data)=>{setWithdraw(data.data)}).catch(failureCallback)
     } catch (error) {
       failureCallback({ error });
     }
@@ -60,7 +60,7 @@ export default function BankLayout() {
           <TabPane tab="Bank Accounts Summary" key="2">
             <Card>
               <Table columns={columns} dataSource={table_values} bordered title={() => <><Row><Col flex='auto'>Bank Account Summary</Col><Col flex='none'>
-              <Button onClick ={() => request.get('http://127.0.0.1:5000/api/banks', { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback)}>Load Data</Button></Col></Row> </>}/>
+              <Button onClick ={() => request.get(`${backend_server}banks`, { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback)}>Load Data</Button></Col></Row> </>}/>
             </Card>
           </TabPane>
 
@@ -71,7 +71,7 @@ export default function BankLayout() {
           <TabPane tab="Withdrwal Summary" key="4">
             <Card>
               <Table columns={columns_2} dataSource={withdrawal_table} bordered title={() => <><Row><Col flex='auto'>Withdrwal Summary</Col><Col flex='none'>
-              <Button onClick ={() => request.get('http://127.0.0.1:5000/api/withdrawals', { getResponse: true }).then((data)=>{setWithdraw(data.data)}).catch(failureCallback)}>Load Data</Button></Col></Row> </>}/>
+              <Button onClick ={() => request.get(`${backend_server}withdrawals`, { getResponse: true }).then((data)=>{setWithdraw(data.data)}).catch(failureCallback)}>Load Data</Button></Col></Row> </>}/>
             </Card>
           </TabPane>
 

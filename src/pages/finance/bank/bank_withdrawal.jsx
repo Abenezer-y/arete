@@ -4,10 +4,8 @@ import request from 'umi-request';
 
 const Formlayout = { labelCol: { span: 6 }, wrapperCol: { span: 24 },};
 const { Title } = Typography;
-// http://127.0.0.1:5000/api
-// https://arete-server.herokuapp.com/api
-const banks_api = 'http://127.0.0.1:5000/api/banks';
-const add_withdrawal_api = 'http://127.0.0.1:5000/api/add_withdrawal';
+
+const backend_server = process.env.REACT_APP_BACKEND_URI
 
 export default function Withdraw() {
   const [bank_values, setBank] = useState([])
@@ -23,7 +21,7 @@ export default function Withdraw() {
   }
   useEffect( ()=>{     
     try {
-       request.get(banks_api, { getResponse: true }).then((data)=>{onSuccefulCallback(data.data)}).catch(failureCallback);
+       request.get(`${backend_server}banks`, { getResponse: true }).then((data)=>{onSuccefulCallback(data.data)}).catch(failureCallback);
     } catch (error) {
       failureCallback({ error });
     }
@@ -32,7 +30,7 @@ export default function Withdraw() {
   const onFinish = (values) => { 
     const value = { ...values, 'date': values['date'].format('YYYY-MM-DD'),};
     console.log(value)
-    request(add_withdrawal_api, 
+    request(`${backend_server}add_withdrawal`, 
             {method: 'post', data: {value},}).then(function(response) 
             {console.log(response);}).catch(function(error) 
             {console.log(error);});

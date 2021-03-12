@@ -8,10 +8,7 @@ import { Link } from 'react-router-dom';
 // import {columns, data} from './income/income_summary';
 const { TabPane } = Tabs;
 const {Content } = Layout;
-// http://127.0.0.1:5000/api/activity
-// https://arete-server.herokuapp.com/api
-const activities_api = 'http://127.0.0.1:5000/api/activities';
-
+const backend_server = process.env.REACT_APP_BACKEND_URI
 
 export default function TaskSummary() {
   const [tasks, setTasks] = useState([])
@@ -20,7 +17,7 @@ export default function TaskSummary() {
 
   useEffect( ()=>{     
         try {
-          request.get(activities_api, { getResponse: true }).then((data)=>{setTasks(data.data)}).catch(failureCallback);
+          request.get(`${backend_server}activities`, { getResponse: true }).then((data)=>{setTasks(data.data)}).catch(failureCallback);
         } catch (error) {
           failureCallback({ error });
         }

@@ -10,7 +10,8 @@ import request from 'umi-request';
 import './task_creation/new-task.css';
 
 const { RangePicker } = DatePicker;
-const activity_save_api = 'https://arete-server.herokuapp.com/api/activity_save';
+const backend_server = process.env.REACT_APP_BACKEND_URI
+
 
 let tag = [{ label: 'Urgent', value: 'urgent' }, 
            { label: 'Recurring', value: 'recurring' },
@@ -36,7 +37,7 @@ class NewTask extends React.Component {
     
                                     
     console.log(value)
-    request(activity_save_api, {method: 'post', data: {value},})
+    request(`${backend_server}activity_save`, {method: 'post', data: {value},})
     .then(function(response) {console.log(response);})
     .catch(function(error) {console.log(error);});
                          

@@ -3,6 +3,7 @@ import { Table, Tabs, Card, Row, Col, Layout, Form, Input, InputNumber, DatePick
 import request from 'umi-request';
 // import {columns, data} from './income/income_summary';
 const { TabPane } = Tabs;
+const backend_server = process.env.REACT_APP_BACKEND_URI
 
 const {Content } = Layout;
 
@@ -36,8 +37,8 @@ export default function IncomeLayout() {
 
   useEffect( ()=>{     
   try {
-    request.get('http://127.0.0.1:5000/api/incomes', { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback);
-    request.get('http://127.0.0.1:5000/api/banks', { getResponse: true }).then((data)=>{onSuccefulCallback(data.data)}).catch(failureCallback);
+    request.get(`${backend_server}incomes`, { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback);
+    request.get(`${backend_server}banks`, { getResponse: true }).then((data)=>{onSuccefulCallback(data.data)}).catch(failureCallback);
   } catch (error) {
     failureCallback({ error });
   }
@@ -47,7 +48,7 @@ export default function IncomeLayout() {
     const dateValue = values['date'];
     const value = { ...values, 'date': dateValue.format('YYYY-MM-DD')};                           
     console.log(value)
-    request('http://127.0.0.1:5000/api/income_save', 
+    request(`${backend_server}income_save`, 
             {method: 'post', data: {value},}).then(function(response) 
             {console.log(response);}).catch(function(error) 
             {console.log(error);});   
@@ -94,7 +95,7 @@ export default function IncomeLayout() {
           <TabPane tab="Income Summary" key="3">
         
             <Table columns={columns} dataSource={table_values} bordered title={() => <><Row><Col flex='auto'>Income Summary</Col><Col flex='none'>
-              <Button onClick ={() => request.get('http://127.0.0.1:5000/api/incomes', { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback)}>Load Data</Button></Col></Row> </>}/>
+              <Button onClick ={() => request.get(`${backend_server}incomes`, { getResponse: true }).then((data)=>{setTable(data.data)}).catch(failureCallback)}>Load Data</Button></Col></Row> </>}/>
        
           </TabPane>
         </Tabs>

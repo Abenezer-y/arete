@@ -3,7 +3,7 @@ import Expense from './expense/expense_registration';
 import React , {useState,  useEffect} from 'react';
 import request from 'umi-request';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-
+const backend_server = process.env.REACT_APP_BACKEND_URI
 const { TabPane } = Tabs;
 const columns = [
   {title: 'Ref', dataIndex: 'id', align: 'center', render: text => <div>{text}</div>, },
@@ -62,7 +62,7 @@ export default function ExpenseLayout() {
 
   useEffect( ()=>{     
   try {
-    request.get('http://127.0.0.1:5000/api/expenses', { getResponse: true }).then((data)=>{setExpenses(data.data)}).catch(failureCallback);
+    request.get(`${backend_server}expenses`, { getResponse: true }).then((data)=>{setExpenses(data.data)}).catch(failureCallback);
   } catch (error) {
     failureCallback({ error });
   }
@@ -75,7 +75,7 @@ export default function ExpenseLayout() {
           <TabPane tab="Expense Summary"  key="1"> 
      
             <Table columns={columns} dataSource={expenses} bordered title={() => <><Row><Col flex='auto'>Expense Summary</Col><Col flex='none'>
-              <Button onClick ={() => request.get('http://127.0.0.1:5000/api/expenses', { getResponse: true }).then((data)=>{setExpenses(data.data)}).catch(failureCallback)}>Load Data</Button></Col></Row> </>}/>
+              <Button onClick ={() => request.get(`${backend_server}expenses`, { getResponse: true }).then((data)=>{setExpenses(data.data)}).catch(failureCallback)}>Load Data</Button></Col></Row> </>}/>
       
           </TabPane>
           <TabPane tab="Expense Registration" key="2"> <Expense /> </TabPane>
