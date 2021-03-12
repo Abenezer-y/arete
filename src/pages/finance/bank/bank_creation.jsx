@@ -4,6 +4,9 @@ import request from 'umi-request';
 
 const Formlayout = { labelCol: { span: 6 }, wrapperCol: { span: 24 },};
 const { Title } = Typography;
+// http://127.0.0.1:5000/api
+// https://arete-server.herokuapp.com/api
+const bank_save_api = 'http://127.0.0.1:5000/api/bank_save';
 
 
 export default function BankAdd() {
@@ -13,7 +16,7 @@ export default function BankAdd() {
   
   const onFinish = (values) => { 
     console.log(values)
-    request('http://127.0.0.1:5000/api/bank_save', 
+    request(bank_save_api, 
             {method: 'post', data: {values},}).then(function(response) 
             {console.log(response);}).catch(function(error) 
             {console.log(error);});

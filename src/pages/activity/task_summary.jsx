@@ -7,23 +7,20 @@ import { Link } from 'react-router-dom';
 
 // import {columns, data} from './income/income_summary';
 const { TabPane } = Tabs;
-
 const {Content } = Layout;
-
-
-
+// http://127.0.0.1:5000/api/activity
+// https://arete-server.herokuapp.com/api
+const activities_api = 'http://127.0.0.1:5000/api/activities';
 
 
 export default function TaskSummary() {
   const [tasks, setTasks] = useState([])
-  // const [selectedRowKeys, setKey] = useState([])
-  
   const failureCallback = (error) => {
       console.error("Error: " + error);}
 
   useEffect( ()=>{     
         try {
-          request.get('http://127.0.0.1:5000/api/activities', { getResponse: true }).then((data)=>{setTasks(data.data)}).catch(failureCallback);
+          request.get(activities_api, { getResponse: true }).then((data)=>{setTasks(data.data)}).catch(failureCallback);
         } catch (error) {
           failureCallback({ error });
         }
@@ -31,8 +28,9 @@ export default function TaskSummary() {
 
  
   const columns = [
-    {title: 'Tag', dataIndex: 'tag', align: 'center', fixed: 'left', width: 70, },
-    {title: 'Title', dataIndex: 'title',  fixed: 'left', width: 180, render: ( text, record, index) => <Link to={`/detail/${record.key}`} >{text}</Link>},
+    {title: 'Tag', dataIndex: 'tag', align: 'center', fixed: 'left', width: 50, },
+    {title: 'Title', dataIndex: 'title',  fixed: 'left', width: 150, 
+      render: ( text, record, index) => <Link to={`/detail/${record.key}`} >{text}</Link>},
     {title: 'Assigned', dataIndex: 'date_1', align: 'center', width: 90  },
     {title: 'Deadline', dataIndex: 'date_2', align: 'center', width: 90 },
     {title: 'Description', dataIndex: 'description', width: 200,},

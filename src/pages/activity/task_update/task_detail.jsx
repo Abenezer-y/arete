@@ -7,6 +7,10 @@ import request from 'umi-request';
 const {Text} = Typography;
 
 const modalFormlayout = { labelCol: { span: 5 }, wrapperCol: { span: 24 },};
+// http://127.0.0.1:5000/api/activity
+// https://arete-server.herokuapp.com/api
+
+const activity_api = 'https://arete-server.herokuapp.com/api/activity';
 
 const requirements = [
   {title: 'Req #', dataIndex: 'key', align: 'center', },
@@ -53,7 +57,7 @@ const TaskDetail = () => {
   const task_address = window.location.href
   const task_id = task_address.charAt(task_address.length-1)
   try {
-    request(`http://127.0.0.1:5000/api/activity/${task_id}`, {method: 'get', getResponse: true }).then(successCallback).catch(failureCallback);
+    request(`${activity_api}/${task_id}`, {method: 'get', getResponse: true }).then(successCallback).catch(failureCallback);
   } catch (error) {
     failureCallback({ error });
   }
