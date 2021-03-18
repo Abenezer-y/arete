@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from 'react';
-import { Table, Tabs, Card, Layout, } from 'antd';
+import { Table, Tabs, Layout, } from 'antd';
 import request from 'umi-request';
 import NewTask from './new_task';
 // import TaskDetail from './task_update/task_detail';
@@ -40,12 +40,8 @@ export default function TaskSummary() {
       <Content style={{ margin: '0 16px' }}>
         <Tabs defaultActiveKey="1">
           <TabPane tab="Task Summary"  key="1">
-              <Card>
-              <Table title={() => 'Activity Summary'} columns={columns}
-              rowKey={record =>record.id} 
-              dataSource={tasks} bordered scroll={{ x: 1200, y: 1200 }} size= 'default'
-                 />
-              </Card>
+            <Table title={() => 'Activity Summary'} columns={columns} rowKey={record =>record.id} 
+                   dataSource={tasks} bordered scroll={{ x: 1200, y: 1200 }} size= 'default'/>
           </TabPane>
           <TabPane tab="New Task" key="2">
             <NewTask/>

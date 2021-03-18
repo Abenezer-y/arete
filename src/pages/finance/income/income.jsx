@@ -18,16 +18,14 @@ const columns = [
 
 
 
-export default function IncomeLayout() {
+export default function Income_App() {
   const [table_values, setTable] = useState([])
   const [bank_values, setBank] = useState([])
   const failureCallback = (error) => {
       console.error("Error: " + error);}
 
   const onSuccefulCallback = (data) => {
-    console.log(data)
     const bank_data = data[1].bank_selection
-    console.log(data[1].bank_selection)
     setBank(bank_data)
   }
 

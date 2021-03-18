@@ -1,5 +1,6 @@
 import { Layout,  Tabs,  Table, Statistic, Row, Col, Card, Button} from 'antd';
-import Expense from './expense/expense_registration';
+import Expense from './expense_registration';
+import Expense_Account from './expense_account';
 import React , {useState,  useEffect} from 'react';
 import request from 'umi-request';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
@@ -17,43 +18,7 @@ const columns = [
 
 const {Content } = Layout;
 
-
-
-function stat_render () {
-  
-  return (
-  <div className="site-statistic-demo-card">
-    <Row gutter={16}>
-      <Col span={12}>
-        <Card>
-          <Statistic
-            title="Active"
-            value={11.28}
-            precision={2}
-            valueStyle={{ color: '#3f8600' }}
-            prefix={<ArrowUpOutlined />}
-            suffix="%"
-          />
-        </Card>
-      </Col>
-      <Col span={12}>
-        <Card>
-          <Statistic
-            title="Idle"
-            value={9.3}
-            precision={2}
-            valueStyle={{ color: '#cf1322' }}
-            prefix={<ArrowDownOutlined />}
-            suffix="%"
-          />
-        </Card>
-      </Col>
-    </Row>
-  </div>
-);
-}
-
-export default function ExpenseLayout() {
+export default function Expense_App() {
   const [expenses, setExpenses] = useState([])
 
   const failureCallback = (error) => {
@@ -71,15 +36,20 @@ export default function ExpenseLayout() {
 
     <Layout style={{ minHeight: '100vh' }}>
       <Content style={{ margin: '0 16px' }}>
-          <Tabs defaultActiveKey="2">
+          <Tabs defaultActiveKey="1">
           <TabPane tab="Expense Summary"  key="1"> 
-     
-            <Table columns={columns} dataSource={expenses} bordered title={() => <><Row><Col flex='auto'>Expense Summary</Col><Col flex='none'>
-              <Button onClick ={() => request.get(`${backend_server}expenses`, { getResponse: true }).then((data)=>{setExpenses(data.data)}).catch(failureCallback)}>Load Data</Button></Col></Row> </>}/>
-      
+            <Table columns={columns} dataSource={expenses} 
+                   bordered title={() => <>
+                   <Row>
+                     <Col flex='auto'>Expense Summary</Col>
+                     <Col flex='none'>
+                     <Button onClick ={() => request.get(`${backend_server}expenses`, { getResponse: true }).then((data)=>{setExpenses(data.data)}).catch(failureCallback)}>Load Data</Button>
+                     </Col>
+                   </Row> </>}/>
           </TabPane>
-          <TabPane tab="Expense Registration" key="2"> <Expense /> </TabPane>
-          <TabPane tab="Expense planning" key="3"> {stat_render} </TabPane>
+          <TabPane tab="Expense Account" key="2"> <Expense_Account /> </TabPane>
+          <TabPane tab="Expense Registration" key="3"> <Expense /> </TabPane>
+          
         </Tabs>
       </Content>
     </Layout>
