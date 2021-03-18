@@ -19,34 +19,20 @@ const Cash_Detail = () => {
   
   const [cash, setCash] = useState([])
   const [expenses, setExpense] = useState([])
-//   const [step, setStep] = useState([])
-//   const [trip, setTrip] = useState([])
-  // const [updates, setUpdates] = useState([])
 
   const failureCallback = (error) => {
     console.error("Error: " + error);}
 
   const successCallback = (data) => {
-    // const cash_data = data[0].withdrawals
-    console.log(data)
-    console.log(data[0])
     setCash(data[0])
   }
-//   const onSuccefulCallback = (data) => {
-//     const cash_data = data[0].withdrawals
-//     setCash(cash_data)
-//   }
-  
-
-//   expense_by_cash/<cash_id></cash_id>
-  // dataSource={requirement}
   const cash_address = window.location.href
   const cash_id = cash_address.charAt(cash_address.length-1)
-  useEffect( ()=>{     
+  useEffect(()=>{     
     try {
       request.get(`${backend_server}withdrawal/${cash_id}`, { getResponse: true }).then((data)=>{successCallback(data.data)}).catch(failureCallback); 
       request.get(`${backend_server}expense_by_cash/${cash_id}`, { getResponse: true }).then((data)=>{setExpense(data.data)}).catch(failureCallback);} 
-    catch (error) {failureCallback({ error });}}, [])
+    catch (error) {failureCallback({ error });}}, [cash_id])
 
   // Text>Title</Text
   return (

@@ -1,9 +1,8 @@
-import { Layout,  Tabs,  Table, Statistic, Row, Col, Card, Button} from 'antd';
+import { Layout,  Tabs,  Table, Row, Col,  Button} from 'antd';
 import Expense from './expense_registration';
-import Expense_Account from './expense_account';
+import ExpenseAccount from './expense_account';
 import React , {useState,  useEffect} from 'react';
 import request from 'umi-request';
-import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 const backend_server = process.env.REACT_APP_BACKEND_URI
 const { TabPane } = Tabs;
 const columns = [
@@ -47,7 +46,7 @@ export default function Expense_App() {
                      </Col>
                    </Row> </>}/>
           </TabPane>
-          <TabPane tab="Expense Account" key="2"> <Expense_Account /> </TabPane>
+          <TabPane tab="Expense Account" key="2"> <ExpenseAccount /> </TabPane>
           <TabPane tab="Expense Registration" key="3"> <Expense /> </TabPane>
           
         </Tabs>

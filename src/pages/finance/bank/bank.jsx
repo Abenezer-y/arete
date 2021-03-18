@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from 'react';
-import { Table, Tabs, Layout, Card, Button, Row, Col } from 'antd';
+import { Table, Tabs, Layout, Button, Row, Col } from 'antd';
 import request from 'umi-request';
 import BankAdd from './bank_creation';
 

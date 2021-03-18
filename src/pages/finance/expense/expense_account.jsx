@@ -13,7 +13,7 @@ const columns = [
   ];
 
 
-const Expense_Account = () => {
+const ExpenseAccount = () => {
   const formRef = React.createRef();
   const [main_form] = Form.useForm();
   const [accounts, setAccount] = useState([])
@@ -86,4 +86,4 @@ const Expense_Account = () => {
   );
 };
 
-export default Expense_Account;
+export default ExpenseAccount;

@@ -1,5 +1,5 @@
-import React , {useState, useRef, useEffect} from 'react';
-import { Table, Card, Row, Col, Layout, Form, Input, InputNumber, DatePicker, Button, Typography, Select } from 'antd';
+import React , {useState, useEffect} from 'react';
+import { Table, Row, Col, Layout, Button,} from 'antd';
 import request from 'umi-request';
 // import {columns, data} from './income/income_summary';
 import { Link } from 'react-router-dom';
@@ -23,7 +23,6 @@ const columns = [
 export default function Cash_App() {
   const [table_values, setTable] = useState([])
 
-//   const [bank_values, setBank] = useState([])
   const failureCallback = (error) => {
       console.error("Error: " + error);}
 
@@ -32,25 +31,11 @@ export default function Cash_App() {
     setTable(withdrawal_data)
   }
 
-  const formRef = useRef('');
-
-  const onReset = () => {formRef.current.resetFields();};
-
   useEffect( ()=>{     
   try {
     request.get(`${backend_server}withdrawals`, { getResponse: true }).then((data)=>{onSuccefulCallback(data.data)}).catch(failureCallback); } 
   catch (error) {failureCallback({ error });}}, [])
-    
-  const onFinish = (values) => { 
-    const dateValue = values['date'];
-    const value = { ...values, 'date': dateValue.format('YYYY-MM-DD')};                           
-    console.log(value)
-    request(`${backend_server}income_save`, 
-            {method: 'post', data: {value},}).then(function(response) 
-            {console.log(response);}).catch(function(error) 
-            {console.log(error);});   
-    onReset()};
-      
+ 
     return (
     <Layout style={{ minHeight: '100vh' }}>
       <Content style={{ margin: '0 16px' }}>
