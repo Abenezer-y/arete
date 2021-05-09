@@ -2,8 +2,7 @@ import React from 'react';
 import { Layout, Menu } from 'antd';
 import { DashboardOutlined, PieChartOutlined, } from '@ant-design/icons';
 
-import {BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 // import DashBoard from './dashboard/dashboard';
 import Summary from './dashBoard/summary';
